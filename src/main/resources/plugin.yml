@@ -1,0 +1,6 @@
+name: EnderLibs
+version: ${project.version}
+main: me.endergaming.enderlibs.EnderLibs
+api-version: 1.16
+authors: [ EnderGamingYT ]
+description: Basic library for Ender's plugins
