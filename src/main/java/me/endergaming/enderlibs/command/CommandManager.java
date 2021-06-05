@@ -12,6 +12,8 @@ public class CommandManager {
 
     /**
      * Please switch to using <b>register()</b>
+     *
+     * @param mainCommand
      */
     @Deprecated
     public void registerMainCommand(MainCommand mainCommand) {
@@ -22,6 +24,9 @@ public class CommandManager {
 
     /**
      * Please switch to using <b>register()</b>
+     *
+     * @param mainCommand
+     * @param subCommand single subcommand
      */
     @Deprecated
     public void registerSubCommand(MainCommand mainCommand, SubCommand subCommand) {

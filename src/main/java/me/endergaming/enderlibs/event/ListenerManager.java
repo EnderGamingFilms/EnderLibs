@@ -6,6 +6,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class ListenerManager {
     }
 
     /**
-     * Registers all listeners added to the listener list.
+     * Registers all {@link Listener} added to the listener list.
      */
     public void registerAll() {
         if (!listeners.isEmpty()) {
@@ -34,7 +35,7 @@ public class ListenerManager {
     }
 
     /**
-     * Unregisters all listeners added to the listener list.
+     * Unregisters all {@link Listener} added to the listener list.
      */
     public void unregisterAll() {
         if (!listeners.isEmpty()) {
@@ -44,7 +45,7 @@ public class ListenerManager {
     }
 
     /**
-     * Registers the specified listener if it's contained in the listener list.
+     * Registers the specified {@link Listener} if it's contained in the listener list.
      *
      * @param listener Specified listener to register.
      */
@@ -56,7 +57,7 @@ public class ListenerManager {
     }
 
     /**
-     * Unregisters the specified listener if it's contained in the listener list.
+     * Unregisters the specified {@link Listener} if it's contained in the listener list.
      *
      * @param listener Specified listener to unregister.
      */
@@ -68,7 +69,7 @@ public class ListenerManager {
     }
 
     /**
-     * Adds the specified listener to the listener list.
+     * Adds the specified {@link Listener} to the listener list.
      *
      * @param listener Specified listener to add.
      */
@@ -77,7 +78,7 @@ public class ListenerManager {
     }
 
     /**
-     * Adds the specified listener to the listener list.
+     * Adds the specified {@link Listener} to the listener list.
      *
      * @param listener Specified listener to remove.
      */
