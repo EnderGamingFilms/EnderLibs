@@ -10,6 +10,7 @@ import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
+import javax.swing.text.Style;
 import java.util.*;
 
 import static me.endergaming.enderlibs.file.config.CoreMessages.*;
@@ -47,18 +48,17 @@ public abstract class MainCommand extends BaseCommand {
         }
         // Player Check
         if (playerOnly) {
-            if (!(sender instanceof Player))
+            if (!(sender instanceof Player)) {
                 MessageUtils.send(sender, NON_PLAYER);
                 return true;
+            }
         }
         // Argument Check
         if (hasCommandArgs) {
-            if (args.length == 0) {
+            if (args.length == 0 || !subCommandMap.containsKey(args[0])) {
                 MessageUtils.send(sender, this);
-            } else if (subCommandMap.containsKey(args[0])) {
-                subCommandMap.get(args[0]).run(sender, cmd, label, args);
             } else {
-                MessageUtils.send(sender, INVALID_ARGUMENT);
+                subCommandMap.get(args[0]).run(sender, cmd, label, args);
             }
             return true;
         }
@@ -67,6 +67,14 @@ public abstract class MainCommand extends BaseCommand {
         return true;
     }
 
+    /**
+     * Main command functionality. You must overload this in anything that extends this class
+     *
+     * @param sender Some ConsoleSender
+     * @param cmd Command Object
+     * @param label Command Name
+     * @param args Command Arugments
+     */
     public abstract void run(CommandSender sender, Command cmd, String label, String[] args);
 
     public MainCommand addSubCommand(SubCommand subCommand) {
@@ -82,6 +90,13 @@ public abstract class MainCommand extends BaseCommand {
         return super.command;
     }
 
+    /**
+     * This will only be shown to the player when using CommandArguments,
+     * for anything else you would have to handle those arguments in your {@link SubCommand#run} function
+     *
+     * @param usage string message supports color codes
+     * @return
+     */
     public MainCommand setUsage(String usage) {
         super.usage = usage;
         return this;

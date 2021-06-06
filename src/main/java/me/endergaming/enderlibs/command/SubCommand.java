@@ -19,16 +19,16 @@ public abstract class SubCommand extends BaseCommand {
     protected Map<String, SubCommand> subCommandMap = new HashMap<>();
     protected JavaPlugin plugin;
     protected String permission;
-    protected boolean hasArgs;
+    protected boolean hasCommandArgs;
 
     public SubCommand(@NotNull final JavaPlugin plugin, String command) {
         this(plugin, command, false, null);
     }
 
-    public SubCommand(@NotNull final JavaPlugin plugin, String command, boolean hasArgs, String usage) {
+    public SubCommand(@NotNull final JavaPlugin plugin, String command, boolean hasCommandArgs, String usage) {
         super(command, usage);
         this.plugin = plugin;
-        this.hasArgs = hasArgs;
+        this.hasCommandArgs = hasCommandArgs;
         this.permission = String.format("%s.command.%s", plugin.getName(), command);
 
         Permission bukkitPerm = new Permission(this.permission);
@@ -44,13 +44,11 @@ public abstract class SubCommand extends BaseCommand {
             return true;
         }
         // Argument Check
-        if (hasArgs) {
-            if (args.length == 0) {
+        if (hasCommandArgs) {
+            if (args.length == 0 || !subCommandMap.containsKey(args[0])) {
                 MessageUtils.send(sender, this);
-            } else if (subCommandMap.containsKey(args[0])) {
-                subCommandMap.get(args[0]).run(sender, cmd, label, args);
             } else {
-                MessageUtils.send(sender, INVALID_ARGUMENT);
+                subCommandMap.get(args[0]).run(sender, cmd, label, args);
             }
             return true;
         }
@@ -59,6 +57,14 @@ public abstract class SubCommand extends BaseCommand {
         return true;
     }
 
+    /**
+     * Main command functionality. You must overload this in anything that extends this class
+     *
+     * @param sender Some ConsoleSender
+     * @param cmd Command Object
+     * @param label Command Name
+     * @param args Command Arugments
+     */
     public abstract void run(CommandSender sender, Command cmd, String label, String[] args);
 
     /** Sub-commands inside of sub-commands poggers **/
@@ -75,6 +81,13 @@ public abstract class SubCommand extends BaseCommand {
         return command;
     }
 
+    /**
+     * This will only be shown to the player when using CommandArguments,
+     * for anything else you would have to handle those arguments in your {@link SubCommand#run} function
+     *
+     * @param usage string message supports color codes
+     * @return
+     */
     public SubCommand setUsage(String usage) {
         super.usage = usage;
         return this;
@@ -85,8 +98,8 @@ public abstract class SubCommand extends BaseCommand {
         return this;
     }
 
-    public SubCommand setHasArgs(boolean hasArgs) {
-        this.hasArgs = hasArgs;
+    public SubCommand setHasCommandArgs(boolean hasCommandArgs) {
+        this.hasCommandArgs = hasCommandArgs;
         return this;
     }
 

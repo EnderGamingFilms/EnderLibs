@@ -1,22 +1,17 @@
 package me.endergaming.enderlibs.text;
 
-import me.endergaming.enderlibs.EnderLibs;
 import me.endergaming.enderlibs.command.BaseCommand;
-import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.io.FileNotFoundException;
 import java.util.logging.Logger;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class MessageUtils {
-
-    private static final Pattern hexPattern = Pattern.compile("(\\{)(?<!\\\\)(#[a-fA-F0-9]{6})(})");
-    private static String logPrefix = EnderLibs.getInstance().getConfig().getString("MESSAGES.PREFIX.log");
+    private static final String logPrefix = "&5&lEnderLibs &r";
 
     /**
      * Returns the message with added prefix and color.
@@ -40,21 +35,12 @@ public class MessageUtils {
     }
 
     /**
-     * Returns the message colorized via color code and/or hex code.
+     * Returns the message colorized via color code.
      *
-     * @param   message The message you want to send to the player, containing a color code and/or hex code.
+     * @param   message The message you want to send to the player, containing a color code.
      * @return          The resulting message implemented with color.
      */
     public static String colorize(String message) {
-        if (Bukkit.getVersion().contains("1.16")) {
-            Matcher matcher = hexPattern.matcher(message);
-
-            while (matcher.find()) {
-                String color = message.substring(matcher.start(), matcher.end());
-                message = message.replace(color, "" + ChatColor.of(color));
-            }
-        }
-
         return ChatColor.translateAlternateColorCodes('&', message);
     }
 
@@ -71,11 +57,11 @@ public class MessageUtils {
     public static void send(CommandSender sender, BaseCommand command) {
         String message = "";
 
-        if (command.getDescription() != null) {
+        if (!command.getDescription().equals("")) {
             message += command.getDescription().concat("\n");
         }
 
-        if (command.getUsage() != null) {
+        if (!command.getUsage().equals("")) {
             message += command.getUsage();
         } else {
             // Default message for commands that do not have a default usage message
