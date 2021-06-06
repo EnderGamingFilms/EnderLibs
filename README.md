@@ -1,4 +1,9 @@
 # EnderLibs
+[![](https://img.shields.io/badge/Subscribe-on%20Youtube-red.svg?logo=youtube)](https://youtube.com/endergamingfilms)
+[![](https://jitpack.io/v/EnderGamingFilms/EnderLibs.svg)](https://jitpack.io/#EnderGamingFilms/EnderLibs)
+![](https://img.shields.io/github/v/release/EnderGamingFilms/EnderLibs)
+[![](https://img.shields.io/github/issues/EnderGamingFilms/EnderLibs)](https://github.com/EnderGamingFilms/EnderLibs/issues)
+
 EnderLibs is a Spigot plugin development library, designed to make life easier and stop yourself from putting a figurative bullet in your head during plugin development. Below, find instructions for installation & usage.
 
 # Installation for Development
