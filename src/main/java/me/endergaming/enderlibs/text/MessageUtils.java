@@ -32,7 +32,7 @@ public class MessageUtils {
     }
 
     public static String withPrefix(String message, String prefix) throws FileNotFoundException {
-        message = logPrefix + message;
+        message = prefix + message;
         return message;
     }
 
