@@ -1,5 +1,6 @@
 package me.endergaming.enderlibs.text;
 
+import me.endergaming.enderlibs.EnderLibs;
 import me.endergaming.enderlibs.command.BaseCommand;
 import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.Bukkit;
@@ -17,11 +18,12 @@ public class MessageUtils {
      * Returns the message with added prefix and color.
      *
      * @param   message The message you want to send to the player.
+     * @param   prefix  Some prefix used for formatting
      * @return          The finalized message.
      */
-    public static String format(String message) {
+    public static String format(String message, String prefix) {
         try {
-            message = withPrefix(message);
+            message = withPrefix(message, prefix);
         } catch(Exception e) {
             e.printStackTrace();
         }
@@ -29,7 +31,7 @@ public class MessageUtils {
         return colorize(message);
     }
 
-    public static String withPrefix(String message) throws FileNotFoundException {
+    public static String withPrefix(String message, String prefix) throws FileNotFoundException {
         message = logPrefix + message;
         return message;
     }
@@ -96,8 +98,8 @@ public class MessageUtils {
      * @param   logLevel    The LogLevel enum determining the severity of the logged message.
      * @param   msg         The message that should be sent to the console.
      */
-    public static void log(final LogLevel logLevel, String msg) {
-        msg = format(logPrefix + msg);
+    public static void log(final LogLevel logLevel, String msg, String logPrefix) {
+        msg = format(msg, logPrefix);
         Logger logger = Bukkit.getLogger();
         switch (logLevel) {
             case INFO:
@@ -112,5 +114,15 @@ public class MessageUtils {
             default:
                 throw new IllegalStateException("Undefined LogLevel: " + logLevel.toString());
         }
+    }
+
+    /**
+     * This method will log a message to the console.
+     *
+     * @param   logLevel    The LogLevel enum determining the severity of the logged message.
+     * @param   msg         The message that should be sent to the console.
+     */
+    public static void log(final LogLevel logLevel, String msg) {
+        log(logLevel, msg, logPrefix);
     }
 }
