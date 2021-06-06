@@ -36,6 +36,7 @@ public class CommandManager {
 
     /**
      * Use this to register just a single main command that has no subcommands.
+     *
      * @param mainCommand
      */
     public void register(MainCommand mainCommand) {
@@ -49,6 +50,7 @@ public class CommandManager {
 
     /**
      * Use this to register a main command with one or more subcommands.
+     * 
      * @param mainCommand
      * @param subCommands single or multiple subcommands
      */

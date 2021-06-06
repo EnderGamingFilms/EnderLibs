@@ -9,7 +9,6 @@ import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -83,11 +82,6 @@ public abstract class SubCommand extends BaseCommand {
 
     public SubCommand setDescription(String description) {
         super.description = description;
-        return this;
-    }
-
-    public SubCommand setAlias(String... alias) {
-        super.alias = Arrays.asList(alias);
         return this;
     }
 

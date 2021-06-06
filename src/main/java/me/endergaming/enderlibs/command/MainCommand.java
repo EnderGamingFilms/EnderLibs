@@ -10,9 +10,7 @@ import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import static me.endergaming.enderlibs.file.config.CoreMessages.*;
 
@@ -21,17 +19,17 @@ public abstract class MainCommand extends BaseCommand {
     protected final Map<String, SubCommand> subCommandMap = new HashMap<>();
     protected JavaPlugin plugin;
     protected String permission;
-    protected boolean hasArgs;
+    protected boolean hasCommandArgs;
     protected boolean playerOnly;
 
     public MainCommand(@NotNull final JavaPlugin plugin, String command) {
-        this(plugin, command, false, true, null, (String[]) null);
+        this(plugin, command, false, false, null, Collections.emptyList());
     }
 
-    public MainCommand(@NotNull final JavaPlugin plugin, String command, boolean playerOnly, boolean hasArgs, String usage, String... alias) {
-        super(command, usage, null, Arrays.asList(alias));
+    public MainCommand(@NotNull final JavaPlugin plugin, String command, boolean playerOnly, boolean hasCommandArgs, String usage, List<String> alias) {
+        super(command, usage, null, alias);
         this.plugin = plugin;
-        this.hasArgs = hasArgs;
+        this.hasCommandArgs = hasCommandArgs;
         this.permission = String.format("%s.command.%s", plugin.getName(), command);
         this.playerOnly = playerOnly;
 
@@ -54,7 +52,7 @@ public abstract class MainCommand extends BaseCommand {
                 return true;
         }
         // Argument Check
-        if (hasArgs) {
+        if (hasCommandArgs) {
             if (args.length == 0) {
                 MessageUtils.send(sender, this);
             } else if (subCommandMap.containsKey(args[0])) {
@@ -99,8 +97,8 @@ public abstract class MainCommand extends BaseCommand {
         return this;
     }
 
-    public MainCommand setHasArgs(boolean hasArgs) {
-        this.hasArgs = hasArgs;
+    public MainCommand setHasCommandArgs(boolean hasCommandArgs) {
+        this.hasCommandArgs = hasCommandArgs;
         return this;
     }
 
