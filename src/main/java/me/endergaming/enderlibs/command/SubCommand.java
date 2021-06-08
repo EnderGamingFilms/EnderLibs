@@ -29,17 +29,12 @@ public abstract class SubCommand extends BaseCommand {
         super(command, usage);
         this.plugin = plugin;
         this.hasCommandArgs = hasCommandArgs;
-        this.permission = String.format("%s.command.%s", plugin.getName(), command);
-
-        Permission bukkitPerm = new Permission(this.permission);
-        bukkitPerm.setDefault(PermissionDefault.OP);
-        Bukkit.getPluginManager().addPermission(bukkitPerm);
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         // Do permission check
-        if (!sender.hasPermission(permission)) {
+        if (permission != null && !sender.hasPermission(permission)) {
             MessageUtils.send(sender, INVALID_PERMISSION);
             return true;
         }
@@ -107,5 +102,13 @@ public abstract class SubCommand extends BaseCommand {
     @Override
     public void register() {
         MessageUtils.log(MessageUtils.LogLevel.SEVERE, "Please don't try to manually register subcommands.");
+    }
+
+    public void setPermission(String permission) {
+        this.permission = permission;
+
+        Permission bukkitPerm = new Permission(this.permission);
+        bukkitPerm.setDefault(PermissionDefault.OP);
+        Bukkit.getPluginManager().addPermission(bukkitPerm);
     }
 }
