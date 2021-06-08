@@ -78,6 +78,7 @@ public abstract class MainCommand extends BaseCommand {
     public abstract void run(CommandSender sender, Command cmd, String label, String[] args);
 
     public MainCommand addSubCommand(SubCommand subCommand) {
+        subCommand.setPermission(String.format("%s.command.%s.%s", plugin.getName(), command, subCommand.command));
         this.subCommandMap.put(subCommand.command, subCommand);
         return this;
     }

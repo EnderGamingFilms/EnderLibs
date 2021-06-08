@@ -108,4 +108,8 @@ public abstract class SubCommand extends BaseCommand {
     public void register() {
         MessageUtils.log(MessageUtils.LogLevel.SEVERE, "Please don't try to manually register subcommands.");
     }
+
+    public void setPermission(String permission) {
+        this.permission = permission;
+    }
 }
