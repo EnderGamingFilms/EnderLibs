@@ -10,7 +10,7 @@ EnderLibs is a Spigot plugin development library, designed to make life easier a
 
 EnderLibs is a standalone plugin, so you will need to install it on any servers that have plugins which depend on it, and specify it as a dependency in your plugin.yml like this:
 
-`depend: [ EnderLibs ]`
+`depend: [EnderLibs]`
 
 To get the jar, download it from the releases tab here on [GitHub](https://github.com/EnderGamingFilms/EnderLibs/releases)
 
