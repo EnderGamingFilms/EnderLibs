@@ -1,40 +1,33 @@
 package me.endergaming.enderlibs.file.config;
 
-import me.endergaming.enderlibs.EnderLibs;
-import me.endergaming.enderlibs.file.Configuration;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.jetbrains.annotations.NotNull;
+public class CoreMessages {
+    public static ErrorMessage INVALID_PLAYER = new ErrorMessage("&cThat player is not online or does not exist.");
+    public static ErrorMessage INVALID_ARGUMENT = new ErrorMessage("&cInvalid argument(s).");
+    public static ErrorMessage INVALID_PERMISSION = new ErrorMessage("&cInsufficient permissions.");
+    public static ErrorMessage NON_PLAYER = new ErrorMessage("&cOnly players can run this command!");
 
-import java.util.List;
-
-public class CoreMessages extends Configuration {
-
-    public static String HELP;
-    public static String INVALID_PLAYER;
-    public static String INVALID_ARGUMENT;
-    public static String INVALID_PERMISSION;
-    public static String NON_PLAYER;
-
-    public CoreMessages(@NotNull final EnderLibs plugin) {
-        super(plugin);
-
-        FileConfiguration config = plugin.getFileManager().getConfig(this.getFileName());
-
-        HELP = config.getString("HELP");
-        INVALID_PERMISSION = config.getString("INVALID_PERMISSION");
-        INVALID_PLAYER = config.getString("INVALID_PLAYER");
-        INVALID_ARGUMENT = config.getString("INVALID_ARGUMENT");
-        NON_PLAYER = config.getString("NON_PLAYER");
+    public static void changeErrorMessage(ErrorMessage e, final String s) {
+        e.setMessage(s);
     }
 
-    @Override
-    public String getFileName() {
-        return "messages.yml";
-    }
+    public static class ErrorMessage {
+        String message;
 
-    @Override
-    public List<Object> getObjects() {
-        return null;
-    }
+        public ErrorMessage(String msg) {
+            this.message = msg;
+        }
 
+        public String getMessage() {
+            return message;
+        }
+
+        public void setMessage(String message) {
+            this.message = message;
+        }
+
+        @Override
+        public String toString() {
+            return this.message;
+        }
+    }
 }

@@ -2,6 +2,7 @@ package me.endergaming.enderlibs.text;
 
 import me.endergaming.enderlibs.EnderLibs;
 import me.endergaming.enderlibs.command.BaseCommand;
+import me.endergaming.enderlibs.file.config.CoreMessages;
 import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -46,11 +47,6 @@ public class MessageUtils {
         return ChatColor.translateAlternateColorCodes('&', message);
     }
 
-    public static void send(Player player, String message) {
-        message = colorize(message);
-        player.sendMessage(message);
-    }
-
     public static void send(CommandSender sender, String message) {
         message = colorize(message);
         sender.sendMessage(message);
@@ -81,6 +77,10 @@ public class MessageUtils {
 
     public static void send(CommandSender sender, BaseComponent message) {
         sender.spigot().sendMessage(message);
+    }
+
+    public static void send(CommandSender sender, CoreMessages.ErrorMessage errorMessage) {
+        send(sender, errorMessage);
     }
 
     /**

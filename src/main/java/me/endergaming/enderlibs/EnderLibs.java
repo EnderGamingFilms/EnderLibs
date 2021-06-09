@@ -1,6 +1,5 @@
 package me.endergaming.enderlibs;
 
-import me.endergaming.enderlibs.file.FileManager;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -14,25 +13,15 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 public final class EnderLibs extends JavaPlugin {
-    FileManager fileManager = new FileManager(this);
 
     @Override
     public void onEnable() {
         // Plugin startup logic
-        try {
-            fileManager.registerConfig("messages.yml");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     @Override
     public void onDisable() {
         // Plugin shutdown logic
-    }
-
-    public FileManager getFileManager() {
-        return fileManager;
     }
 
     public static EnderLibs getInstance() {
