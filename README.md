@@ -30,4 +30,3 @@ To get the jar, download it from the releases tab here on [GitHub](https://githu
 	<version>LATEST</version>
 </dependency>
 ```
-Test 1
