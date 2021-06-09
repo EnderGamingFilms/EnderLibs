@@ -13,7 +13,7 @@ EnderLibs is a standalone plugin, so you will need to install it on any servers 
 `depend: [EnderLibs]`
 
 To get the jar, download it from the releases tab here on [GitHub](https://github.com/EnderGamingFilms/EnderLibs/releases)
-
+This is another test
 ### Maven:
 
 ```
