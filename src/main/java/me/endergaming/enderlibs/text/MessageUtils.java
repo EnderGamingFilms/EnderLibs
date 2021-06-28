@@ -52,6 +52,12 @@ public class MessageUtils {
         sender.sendMessage(message);
     }
 
+    public static void send(Player player, String message) {
+        message = colorize(message);
+        player.sendMessage(message);
+    }
+
+
     public static void send(CommandSender sender, BaseCommand command) {
         String message = "";
 
@@ -80,7 +86,7 @@ public class MessageUtils {
     }
 
     public static void send(CommandSender sender, CoreMessages.ErrorMessage errorMessage) {
-        send(sender, errorMessage);
+        send(sender, errorMessage.toString());
     }
 
     /**
