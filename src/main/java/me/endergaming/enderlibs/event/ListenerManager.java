@@ -10,6 +10,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import static me.endergaming.enderlibs.EnderLibs.getCallingPlugin;
+
 /**
  * Example Usage:
  * <p>
@@ -30,7 +32,7 @@ public class ListenerManager {
         if (!listeners.isEmpty()) {
             unregisterAll();
             for (Listener listener : listeners)
-                Bukkit.getPluginManager().registerEvents(listener, plugin);
+                register(listener);
         }
     }
 
@@ -52,7 +54,7 @@ public class ListenerManager {
     public void register(Listener listener) {
         if (!listeners.contains(listener)) {
             listeners.add(listener);
-            Bukkit.getPluginManager().registerEvents(listener, plugin);
+            Bukkit.getServer().getPluginManager().registerEvents(listener, plugin);
         }
     }
 

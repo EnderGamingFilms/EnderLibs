@@ -1,6 +1,5 @@
 package me.endergaming.enderlibs.text;
 
-import me.endergaming.enderlibs.EnderLibs;
 import me.endergaming.enderlibs.command.BaseCommand;
 import me.endergaming.enderlibs.file.config.CoreMessages;
 import net.md_5.bungee.api.chat.BaseComponent;
@@ -13,7 +12,7 @@ import java.io.FileNotFoundException;
 import java.util.logging.Logger;
 
 public class MessageUtils {
-    private static final String logPrefix = "&5&lEnderLibs &r";
+    public static final String PREFIX_ENDER_LIBS = "&5&lEnderLibs &r";
 
     /**
      * Returns the message with added prefix and color.
@@ -129,6 +128,6 @@ public class MessageUtils {
      * @param   msg         The message that should be sent to the console.
      */
     public static void log(final LogLevel logLevel, String msg) {
-        log(logLevel, msg, logPrefix);
+        log(logLevel, msg, PREFIX_ENDER_LIBS);
     }
 }

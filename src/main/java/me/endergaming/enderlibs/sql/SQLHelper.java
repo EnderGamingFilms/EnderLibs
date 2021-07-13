@@ -1,6 +1,5 @@
 package me.endergaming.enderlibs.sql;
 
-import me.endergaming.enderlibs.EnderLibs;
 import me.endergaming.enderlibs.util.Task;
 
 import java.io.Closeable;
@@ -10,6 +9,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 import java.util.function.Consumer;
+
+import static me.endergaming.enderlibs.EnderLibs.getCallingPlugin;
 
 /**
  * Wraps a {@link Connection} and offers helpful methods that don't need to be surrounded in a try/catch
@@ -398,7 +399,7 @@ public class SQLHelper implements Closeable {
             return;
         }
         setAutoCommit(false);
-        commitTask = Task.syncRepeating(EnderLibs.getInstance(), this::commit, ticks, ticks);
+        commitTask = Task.syncRepeating(getCallingPlugin(), this::commit, ticks, ticks);
     }
 
     /**

@@ -1,5 +1,6 @@
 package me.endergaming.enderlibs.file;
 
+import me.endergaming.enderlibs.EnderLibs;
 import me.endergaming.enderlibs.text.MessageUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -10,6 +11,8 @@ import org.jetbrains.annotations.NotNull;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+
+import static me.endergaming.enderlibs.EnderLibs.getCallingPlugin;
 
 public class FileManager {
 
@@ -66,13 +69,15 @@ public class FileManager {
      */
     public File getFile(String name) {
         File file = new File(dataFolder, name);
+        plugin.getName();
+        String prefix = ChatColor.WHITE + plugin.getName() + "? ";
 
         if (!file.exists()) {
             try {
                 plugin.saveResource(name, true);
-                MessageUtils.log(MessageUtils.LogLevel.WARNING, ChatColor.GREEN + name + " did not exist so one was created");
+                MessageUtils.log(MessageUtils.LogLevel.WARNING, ChatColor.GREEN + name + " did not exist so one was created", prefix);
             } catch (Exception e) {
-                MessageUtils.log(MessageUtils.LogLevel.WARNING, ChatColor.RED + "There was an issue creating " + name);
+                MessageUtils.log(MessageUtils.LogLevel.WARNING, ChatColor.RED + "There was an issue creating " + name, prefix);
                 e.printStackTrace();
             }
         }
