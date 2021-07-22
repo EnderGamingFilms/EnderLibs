@@ -4,6 +4,8 @@
 ![](https://img.shields.io/github/v/release/EnderGamingFilms/EnderLibs)
 [![](https://img.shields.io/github/issues/EnderGamingFilms/EnderLibs)](https://github.com/EnderGamingFilms/EnderLibs/issues)
 
+#### Credits (SQLHelper & Regions) - https://github.com/Redempt/RedLib
+
 EnderLibs is a Spigot plugin development library, designed to make life easier and stop yourself from putting a figurative bullet in your head during plugin development. Below, find instructions for installation & usage.
 
 # Installation for Development
