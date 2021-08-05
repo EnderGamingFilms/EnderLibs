@@ -12,6 +12,7 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.swing.text.Style;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static me.endergaming.enderlibs.file.config.CoreMessages.*;
 
@@ -121,5 +122,16 @@ public abstract class MainCommand extends BaseCommand {
     public MainCommand setPlayerOnly(boolean playerOnly) {
         this.playerOnly = playerOnly;
         return this;
+    }
+
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
+        if (args.length == 1) {
+            return this.subCommandMap.keySet().stream()
+                    .map(String::toLowerCase)
+                    .filter(s -> s.startsWith(args[0].toLowerCase()))
+                    .collect(Collectors.toList());
+        }
+        return null;
     }
 }

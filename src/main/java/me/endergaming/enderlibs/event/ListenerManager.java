@@ -71,11 +71,11 @@ public class ListenerManager {
     }
 
     /**
-     * Adds the specified {@link Listener} to the listener list.
+     * Adds the specified {@link Listener} to the listener list. (Without registering it)
      *
      * @param listener Specified listener to add.
      */
-    private void add(Listener listener) {
+    public void add(Listener listener) {
         this.listeners.add(listener);
     }
 
