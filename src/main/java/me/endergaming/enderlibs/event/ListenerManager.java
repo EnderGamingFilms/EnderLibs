@@ -15,7 +15,7 @@ import static me.endergaming.enderlibs.EnderLibs.getCallingPlugin;
 /**
  * Example Usage:
  * <p>
- * JavaPlugin#eventManager.register(listener);
+ * JavaPlugin#listenerManager.register(listener);
  */
 public class ListenerManager {
     private final JavaPlugin plugin;
@@ -84,8 +84,15 @@ public class ListenerManager {
      *
      * @param listener Specified listener to remove.
      */
-    private void remove(Listener listener) {
+    public void remove(Listener listener) {
         this.listeners.remove(listener);
     }
 
+    /**
+     * Clears & Unregisters all listeners from the manager
+     */
+    public void clearAndRemove() {
+        this.listeners.forEach(HandlerList::unregisterAll);
+        this.listeners.clear();
+    }
 }

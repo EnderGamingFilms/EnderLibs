@@ -10,11 +10,10 @@ import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
-import javax.swing.text.Style;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static me.endergaming.enderlibs.file.config.CoreMessages.*;
+import static me.endergaming.enderlibs.file.Responses.*;
 
 
 public abstract class MainCommand extends BaseCommand {

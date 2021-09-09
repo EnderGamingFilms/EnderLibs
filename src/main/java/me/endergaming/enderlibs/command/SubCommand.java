@@ -12,8 +12,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.HashMap;
 import java.util.Map;
 
-import static me.endergaming.enderlibs.file.config.CoreMessages.INVALID_ARGUMENT;
-import static me.endergaming.enderlibs.file.config.CoreMessages.INVALID_PERMISSION;
+import static me.endergaming.enderlibs.file.Responses.INVALID_PERMISSION;
 
 public abstract class SubCommand extends BaseCommand {
     protected Map<String, SubCommand> subCommandMap = new HashMap<>();

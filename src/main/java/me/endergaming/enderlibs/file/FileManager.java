@@ -9,104 +9,92 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.HashMap;
-
-import static me.endergaming.enderlibs.EnderLibs.getCallingPlugin;
 
 public class FileManager {
+    /**
+     * Returns the Config located at the "path" with extension "ext"
+     * <br /><br />
+     * Note: If the file does not exist it will try to be saved from the corresponding location in the plugins resources
+     *
+     * @param path Path to file, using "." as a separator for folders (ex: {@literal "data.players"})
+     * @param ext  File extension (ex: {@literal "yml"})
+     * @return org.bukkit.configuration.file.FileConfiguration
+     */
+    public static FileConfiguration getConfig(String path, String ext, @NotNull JavaPlugin instance) {
+        return YamlConfiguration.loadConfiguration(getFile(path, ext, instance));
+    }
 
-    private final HashMap<String, File> fileList = new HashMap<>();
-    private final File dataFolder;
-    private final JavaPlugin plugin;
+    /**
+     * Returns the Config located at the "path" with extension "ext"
+     * <br /><br />
+     * Note: If the file does not exist it will try to be saved from the corresponding location in the plugins resources
+     *
+     * @param path Path to file, using "." as a separator for folders (ex: {@literal "data.players"})
+     * @param ext  File extension (ex: {@literal "yml"})
+     * @return org.bukkit.configuration.file.FileConfiguration
+     */
+    public static FileConfiguration getConfig(String path, String ext) {
+        JavaPlugin instance = (JavaPlugin) EnderLibs.getCallingPlugin();
+        if (instance == null) throw new NullPointerException("Obtained plugin instance was null.");
+        return YamlConfiguration.loadConfiguration(getFile(path, ext, instance));
+    }
 
-    public FileManager(@NotNull final JavaPlugin plugin) {
-        this.dataFolder = plugin.getDataFolder();
-        this.plugin = plugin;
+    /**
+     * Returns the File located at the "path" with extension "ext".
+     * <br /><br />
+     * Note: If the file does not exist it will try to be saved from the corresponding location in the plugins resources
+     *
+     * @param path Path to file, using "." as a separator for folders (ex: {@literal "data.players"})
+     * @param ext  File extension (ex: {@literal "yml"})
+     * @return java.io.File
+     */
+    public static File getFile(String path, String ext) {
+        JavaPlugin instance = (JavaPlugin) EnderLibs.getCallingPlugin();
+        if (instance == null) throw new NullPointerException("Obtained plugin instance was null.");
+        return getFile(path, ext, instance);
+    }
 
-        // Makes the plugin directory if it didn't make itself for unknown reason.
-        if (!plugin.getDataFolder().exists()) {
-            plugin.getDataFolder().mkdir();
+    /**
+     * Returns the File located at the "path" with extension "ext".
+     * <br /><br />
+     * Note: If the file does not exist it will try to be saved from the corresponding location in the plugins resources
+     *
+     * @param path Path to file, using "." as a separator for folders (ex: {@literal "data.players"})
+     * @param ext  File extension (ex: {@literal "yml"})
+     * @return java.io.File
+     */
+    public static File getFile(String path, String ext, @NotNull JavaPlugin instance) {
+        String[] splitPath = path.split("\\.");
+        StringBuilder parentPath = new StringBuilder().append(instance.getDataFolder().getAbsolutePath());
+        String fileName = splitPath[splitPath.length - 1].concat(".").concat(ext);
+        for (int i = 0; i < splitPath.length; ++i) {
+            if (i != splitPath.length - 1) {
+                parentPath.append(File.separator);
+                parentPath.append(splitPath[i]);
+            }
         }
-    }
-
-    /**
-     * Registers a configuration into the test.FileManager based upon the provided file name.
-     *
-     * @param   files    The names of the specified files.
-     */
-    public void registerConfig(String... files) {
-        for (String name : files) {
-            fileList.put(name, this.getFile(name));
-        }
-    }
-
-    /**
-     * Reloads the specific configuration to be updated for the server.
-     *
-     * @param   fileConfiguration       The targeted FileConfiguration you wish to reload.
-     */
-    // TODO: Find a better purpose or remove this method
-    public void reloadConfig(FileConfiguration fileConfiguration) {
-        YamlConfiguration.loadConfiguration(this.getFile(fileConfiguration.getName()));
-    }
-
-    /**
-     * Returns the FileConfiguration that matches files with the specified file name.
-     *
-     * @param   name                    The name of the file you wish to get.
-     * @return                          The FileConfiguration with the matching file name.
-     */
-    public FileConfiguration getConfig(String name) {
-        return YamlConfiguration.loadConfiguration(this.getFile(name));
-    }
-
-    /**
-     * Returns the File that's name matches the specified name.
-     *
-     * @param   name                    The name of the file you wish to get.
-     * @return                          The file with the matching name.
-     */
-    public File getFile(String name) {
-        File file = new File(dataFolder, name);
-        plugin.getName();
-        String prefix = ChatColor.WHITE + plugin.getName() + "? ";
-
+        File file = new File(parentPath.toString(), fileName);
         if (!file.exists()) {
             try {
-                plugin.saveResource(name, true);
-                MessageUtils.log(MessageUtils.LogLevel.WARNING, ChatColor.GREEN + name + " did not exist so one was created", prefix);
+                instance.saveResource(path.replace(".", File.separator).concat("." + ext), true);
+                MessageUtils.log(MessageUtils.LogLevel.WARNING, ChatColor.GREEN + fileName + " did not exist so one was created");
             } catch (Exception e) {
-                MessageUtils.log(MessageUtils.LogLevel.WARNING, ChatColor.RED + "There was an issue creating " + name, prefix);
+                MessageUtils.log(MessageUtils.LogLevel.WARNING, ChatColor.RED + "There was an issue creating " + fileName);
                 e.printStackTrace();
             }
         }
-
         return file;
     }
 
     /**
-     * Saves the specified file whilst the server is running.
-     *
-     * @param   name        The name of the file you wish to save.
-     * @throws  IOException Throws if the file can not be found.
+     * Simple integer parser. (Prevents NumberFormatExceptions)
      */
-    public void saveFile(String name) throws IOException {
-        /*
-        For a more intricate save system, such as save based off of data from the server, that will
-        require your own method.
-         */
-
-        this.getConfig(name).save(this.getFile(name));
+    public static boolean validateInt(String s) {
+        try {
+            Integer.parseInt(s);
+            return true;
+        } catch (NumberFormatException ignored) {
+            return false;
+        }
     }
-
-    /**
-     * Returns the list of active configuration files.
-     *
-     * @return The list of active configuration files.
-     */
-    public HashMap<String, File> getFileList() {
-        return fileList;
-    }
-
 }
