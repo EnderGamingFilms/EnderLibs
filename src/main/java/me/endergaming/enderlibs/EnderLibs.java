@@ -24,10 +24,6 @@ public final class EnderLibs extends JavaPlugin {
         // Plugin shutdown logic
     }
 
-    public static EnderLibs getInstance() {
-        return EnderLibs.getPlugin(EnderLibs.class);
-    }
-
     /**
      * @return The server version String (ex: 1.16.4)
      */
@@ -39,6 +35,7 @@ public final class EnderLibs extends JavaPlugin {
 
     /**
      * Gets the plugin that called the calling method of this method
+     *
      * @return The plugin which called the method
      */
     public static Plugin getCallingPlugin() {
@@ -55,9 +52,10 @@ public final class EnderLibs extends JavaPlugin {
 
     /**
      * Gets all non-abstract, non-interface classes which extend a certain class within a plugin
+     *
      * @param plugin The plugin
-     * @param clazz The class
-     * @param <T> The type of the class
+     * @param clazz  The class
+     * @param <T>    The type of the class
      * @return The list of matching classes
      */
     public static <T> List<Class<? extends T>> getExtendingClasses(Plugin plugin, Class<T> clazz) {
@@ -79,7 +77,7 @@ public final class EnderLibs extends JavaPlugin {
                 Class<?> c;
                 try {
                     c = Class.forName(name, true, loader);
-                } catch (ClassNotFoundException ex) {
+                } catch (ClassNotFoundException | NoClassDefFoundError ex) {
                     continue;
                 }
                 if (!clazz.isAssignableFrom(c) || Modifier.isAbstract(c.getModifiers()) || c.isInterface()) {

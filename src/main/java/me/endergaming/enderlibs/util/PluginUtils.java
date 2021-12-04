@@ -2,13 +2,11 @@ package me.endergaming.enderlibs.util;
 
 import me.endergaming.enderlibs.EnderLibs;
 import me.endergaming.enderlibs.text.MessageUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class PluginUtils {
@@ -18,7 +16,7 @@ public class PluginUtils {
      * @return List of OfflinePlayer objects that have connected to the server.
      */
     public static List<OfflinePlayer> getOfflinePlayerList() {
-        return Arrays.asList(EnderLibs.getInstance().getServer().getOfflinePlayers());
+        return Arrays.asList(Bukkit.getServer().getOfflinePlayers());
     }
 
     /**
@@ -45,7 +43,7 @@ public class PluginUtils {
      * @return List of Player objects that are currently connected to the server.
      */
     public static List<? extends Player> getOnlinePlayerList() {
-        return new ArrayList<>(EnderLibs.getInstance().getServer().getOnlinePlayers());
+        return new ArrayList<>(Bukkit.getServer().getOnlinePlayers());
     }
 
     /**
@@ -72,8 +70,12 @@ public class PluginUtils {
      * @param message Custom log message displayed before plugin is disabled
      */
     public static void disablePlugin(String message) {
-        MessageUtils.log(MessageUtils.LogLevel.SEVERE, message);
-        EnderLibs.getInstance().getPluginLoader().disablePlugin(EnderLibs.getInstance());
+        try {
+            MessageUtils.log(MessageUtils.LogLevel.SEVERE, message);
+            Objects.requireNonNull(EnderLibs.getCallingPlugin()).getPluginLoader().disablePlugin(EnderLibs.getCallingPlugin());
+        } catch (Exception e) {
+            MessageUtils.log(MessageUtils.LogLevel.SEVERE, "There was an error while trying to disable plugin.");
+        }
     }
 
 }
