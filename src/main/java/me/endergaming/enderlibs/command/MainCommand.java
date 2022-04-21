@@ -31,7 +31,7 @@ public abstract class MainCommand extends BaseCommand {
         super(command, usage, null, alias);
         this.plugin = plugin;
         this.hasCommandArgs = hasCommandArgs;
-        this.permission = String.format("%s.command.%s", plugin.getName(), command);
+        this.permission = String.format("%s.command.%s", plugin.getName().toLowerCase(), command);
         this.playerOnly = playerOnly;
 
         Permission bukkitPerm = new Permission(this.permission);
@@ -78,7 +78,7 @@ public abstract class MainCommand extends BaseCommand {
     public abstract void run(CommandSender sender, Command cmd, String label, String[] args);
 
     public MainCommand addSubCommand(SubCommand subCommand) {
-        subCommand.setPermission(String.format("%s.command.%s.%s", plugin.getName(), command, subCommand.command));
+        subCommand.setPermission(String.format("%s.command.%s.%s", plugin.getName().toLowerCase(), command, subCommand.command));
         this.subCommandMap.put(subCommand.command, subCommand);
         return this;
     }
