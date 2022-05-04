@@ -15,10 +15,7 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class BetterItemStack {
 
@@ -88,6 +85,14 @@ public class BetterItemStack {
         return this;
     }
 
+    public BetterItemStack setLore(String... list) {
+        ItemMeta meta = meta();
+        meta.setLore(Arrays.asList(list));
+        meta(meta);
+
+        return this;
+    }
+
     public boolean hasCustomModelData() {
         return meta().hasCustomModelData();
     }
@@ -139,6 +144,22 @@ public class BetterItemStack {
 
     public boolean hasConflictingEnchant(@NotNull Enchantment enchantment) {
         return meta().hasConflictingEnchant(enchantment);
+    }
+
+    public BetterItemStack addEnchantInline(@NotNull Enchantment enchantment, int i, boolean b) {
+        ItemMeta meta = meta();
+        boolean r = meta.addEnchant(enchantment, i, b);
+        meta(meta);
+
+        return this;
+    }
+
+    public BetterItemStack removeEnchantInline(@NotNull Enchantment enchantment) {
+        ItemMeta meta = meta();
+        boolean r = meta.removeEnchant(enchantment);
+        meta(meta);
+
+        return this;
     }
 
     public BetterItemStack addItemFlags(@NotNull ItemFlag... itemFlags) {
