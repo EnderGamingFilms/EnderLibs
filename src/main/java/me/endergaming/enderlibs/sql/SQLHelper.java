@@ -373,7 +373,8 @@ public class SQLHelper implements Closeable {
      */
     public void setAutoCommit(boolean autoCommit) {
         try {
-            setCommitInterval(-1);
+            this.disableCommitTask();
+
             connection.setAutoCommit(autoCommit);
         } catch (SQLException e) {
             sneakyThrow(e);
@@ -400,15 +401,22 @@ public class SQLHelper implements Closeable {
      * @param ticks The number of ticks between commits, or -1 to disable
      */
     public void setCommitInterval(int ticks) {
+        this.disableCommitTask();
+
+        if (ticks == -1) {
+            return;
+        }
+
+        setAutoCommit(false);
+
+        commitTask = Task.syncRepeating(getCallingPlugin(), this::commit, ticks, ticks);
+    }
+
+    private void disableCommitTask() {
         if (commitTask != null) {
             commitTask.cancel();
             commitTask = null;
         }
-        if (ticks == -1) {
-            return;
-        }
-        setAutoCommit(false);
-        commitTask = Task.syncRepeating(getCallingPlugin(), this::commit, ticks, ticks);
     }
 
     /**
