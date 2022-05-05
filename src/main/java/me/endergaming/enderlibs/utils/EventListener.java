@@ -1,6 +1,5 @@
-package me.endergaming.enderlibs.util;
+package me.endergaming.enderlibs.utils;
 
-import me.endergaming.enderlibs.EnderLibs;
 import org.bukkit.Bukkit;
 import org.bukkit.event.*;
 import org.bukkit.plugin.Plugin;
@@ -10,54 +9,58 @@ import java.util.function.Consumer;
 
 /**
  * A compact way to define a Listener using a lambda
- * @author Redempt
  *
  * @param <T> The event being listened for
+ * @author Redempt
  */
 public class EventListener<T extends Event> implements Listener {
 
-    private BiConsumer<EventListener<T>, T> handler;
-    private Class<T> eventClass;
+    private final BiConsumer<EventListener<T>, T> handler;
+    private final Class<T> eventClass;
 
     /**
      * Creates and registers a Listener for the given event
+     *
      * @param eventClass The class of the event being listened for
-     * @param priority The EventPriority for this listener
-     * @param handler The callback to receive the event and this EventListener
+     * @param priority   The EventPriority for this listener
+     * @param handler    The callback to receive the event and this EventListener
      */
     public EventListener(Class<T> eventClass, EventPriority priority, BiConsumer<EventListener<T>, T> handler) {
-        this(EnderLibs.getCallingPlugin(), eventClass, priority, handler);
+        this(ServerUtils.getCallingPlugin(), eventClass, priority, handler);
     }
 
     /**
      * Creates and registers a Listener for the given event
-     * @param plugin The plugin registering the listener
+     *
+     * @param plugin     The plugin registering the listener
      * @param eventClass The class of the event being listened for
-     * @param priority The EventPriority for this listener
-     * @param handler The callback to receive the event and this EventListener
+     * @param priority   The EventPriority for this listener
+     * @param handler    The callback to receive the event and this EventListener
      */
     public EventListener(Plugin plugin, Class<T> eventClass, EventPriority priority, BiConsumer<EventListener<T>, T> handler) {
         this.handler = handler;
         this.eventClass = eventClass;
-        Bukkit.getPluginManager().registerEvent(eventClass, this, priority, (l, e) -> handleEvent((T) e), plugin);
+        Bukkit.getPluginManager().registerEvent(eventClass, this, priority, (l, e) -> this.handleEvent((T) e), plugin);
     }
 
     /**
      * Creates and registers a Listener for the given event
+     *
      * @param eventClass The class of the event being listened for
-     * @param priority The EventPriority for this listener
-     * @param handler The callback to receive the event
+     * @param priority   The EventPriority for this listener
+     * @param handler    The callback to receive the event
      */
     public EventListener(Class<T> eventClass, EventPriority priority, Consumer<T> handler) {
-        this(EnderLibs.getCallingPlugin(), eventClass, priority, handler);
+        this(ServerUtils.getCallingPlugin(), eventClass, priority, handler);
     }
 
     /**
      * Creates and registers a Listener for the given event
-     * @param plugin The plugin registering the listener
+     *
+     * @param plugin     The plugin registering the listener
      * @param eventClass The class of the event being listened for
-     * @param priority The EventPriority for this listener
-     * @param handler The callback to receive the event
+     * @param priority   The EventPriority for this listener
+     * @param handler    The callback to receive the event
      */
     public EventListener(Plugin plugin, Class<T> eventClass, EventPriority priority, Consumer<T> handler) {
         this(plugin, eventClass, priority, (l, e) -> handler.accept(e));
@@ -65,18 +68,20 @@ public class EventListener<T extends Event> implements Listener {
 
     /**
      * Creates and registers a Listener for the given event
+     *
      * @param eventClass The class of the event being listened for
-     * @param handler The callback to receive the event and this EventListener
+     * @param handler    The callback to receive the event and this EventListener
      */
     public EventListener(Class<T> eventClass, BiConsumer<EventListener<T>, T> handler) {
-        this(EnderLibs.getCallingPlugin(), eventClass, handler);
+        this(ServerUtils.getCallingPlugin(), eventClass, handler);
     }
 
     /**
      * Creates and registers a Listener for the given event
-     * @param plugin The plugin registering the listener
+     *
+     * @param plugin     The plugin registering the listener
      * @param eventClass The class of the event being listened for
-     * @param handler The callback to receive the event and this EventListener
+     * @param handler    The callback to receive the event and this EventListener
      */
     public EventListener(Plugin plugin, Class<T> eventClass, BiConsumer<EventListener<T>, T> handler) {
         this(plugin, eventClass, EventPriority.NORMAL, handler);
@@ -84,18 +89,20 @@ public class EventListener<T extends Event> implements Listener {
 
     /**
      * Creates and registers a Listener for the given event
+     *
      * @param eventClass The class of the event being listened for
-     * @param handler The callback to receive the event
+     * @param handler    The callback to receive the event
      */
     public EventListener(Class<T> eventClass, Consumer<T> handler) {
-        this(EnderLibs.getCallingPlugin(), eventClass, handler);
+        this(ServerUtils.getCallingPlugin(), eventClass, handler);
     }
 
     /**
      * Creates and registers a Listener for the given event
-     * @param plugin The plugin registering the listener
+     *
+     * @param plugin     The plugin registering the listener
      * @param eventClass The class of the event being listened for
-     * @param handler The callback to receive the event
+     * @param handler    The callback to receive the event
      */
     public EventListener(Plugin plugin, Class<T> eventClass, Consumer<T> handler) {
         this(plugin, eventClass, EventPriority.NORMAL, handler);
@@ -103,8 +110,8 @@ public class EventListener<T extends Event> implements Listener {
 
     @EventHandler
     public void handleEvent(T event) {
-        if (event.getClass().equals(eventClass)) {
-            handler.accept(this, event);
+        if (event.getClass().equals(this.eventClass)) {
+            this.handler.accept(this, event);
         }
     }
 

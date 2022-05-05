@@ -11,7 +11,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.tags.CustomItemTagContainer;
 import org.bukkit.material.MaterialData;
-import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -27,253 +26,253 @@ public class BetterItemStack {
 
     //region ItemMeta
     private ItemMeta meta() {
-        return itemStack.getItemMeta();
+        return this.itemStack.getItemMeta();
     }
     
     private void meta(ItemMeta meta) {
-        itemStack.setItemMeta(meta);
+        this.itemStack.setItemMeta(meta);
     }
 
     public boolean hasDisplayName() {
-        return meta().hasDisplayName();
+        return this.meta().hasDisplayName();
     }
 
     @NotNull
     public String getDisplayName() {
-        return meta().getDisplayName();
+        return this.meta().getDisplayName();
     }
 
     public BetterItemStack setDisplayName(@Nullable String s) {
-         ItemMeta meta = meta();
+         ItemMeta meta = this.meta();
          meta.setDisplayName(s);
-         meta(meta);
+        this.meta(meta);
 
          return this;
     }
 
     public boolean hasLocalizedName() {
-        return meta().hasLocalizedName();
+        return this.meta().hasLocalizedName();
     }
 
     @NotNull
     public String getLocalizedName() {
-        return meta().getLocalizedName();
+        return this.meta().getLocalizedName();
     }
 
     public BetterItemStack setLocalizedName(@Nullable String s) {
-        ItemMeta meta = meta();
+        ItemMeta meta = this.meta();
         meta.setLocalizedName(s);
-        meta(meta);
+        this.meta(meta);
 
         return this;
     }
 
     public boolean hasLore() {
-        return meta().hasLore();
+        return this.meta().hasLore();
     }
 
     @Nullable
     public List<String> getLore() {
-        return meta().getLore();
+        return this.meta().getLore();
     }
 
     public BetterItemStack setLore(@Nullable List<String> list) {
-        ItemMeta meta = meta();
+        ItemMeta meta = this.meta();
         meta.setLore(list);
-        meta(meta);
+        this.meta(meta);
 
         return this;
     }
 
     public BetterItemStack setLore(String... list) {
-        ItemMeta meta = meta();
+        ItemMeta meta = this.meta();
         meta.setLore(Arrays.asList(list));
-        meta(meta);
+        this.meta(meta);
 
         return this;
     }
 
     public boolean hasCustomModelData() {
-        return meta().hasCustomModelData();
+        return this.meta().hasCustomModelData();
     }
 
     public int getCustomModelData() {
-        return meta().getCustomModelData();
+        return this.meta().getCustomModelData();
     }
 
     public BetterItemStack setCustomModelData(@Nullable Integer integer) {
-        ItemMeta meta = meta();
+        ItemMeta meta = this.meta();
         meta.setCustomModelData(integer);
-        meta(meta);
+        this.meta(meta);
 
         return this;
     }
 
     public boolean hasEnchants() {
-        return meta().hasEnchants();
+        return this.meta().hasEnchants();
     }
 
     public boolean hasEnchant(@NotNull Enchantment enchantment) {
-        return meta().hasEnchant(enchantment);
+        return this.meta().hasEnchant(enchantment);
     }
 
     public int getEnchantLevel(@NotNull Enchantment enchantment) {
-        return meta().getEnchantLevel(enchantment);
+        return this.meta().getEnchantLevel(enchantment);
     }
 
     @NotNull
     public Map<Enchantment, Integer> getEnchants() {
-        return meta().getEnchants();
+        return this.meta().getEnchants();
     }
 
     public boolean addEnchant(@NotNull Enchantment enchantment, int i, boolean b) {
-        ItemMeta meta = meta();
+        ItemMeta meta = this.meta();
         boolean r = meta.addEnchant(enchantment, i, b);
-        meta(meta);
+        this.meta(meta);
 
         return r;
     }
 
     public boolean removeEnchant(@NotNull Enchantment enchantment) {
-        ItemMeta meta = meta();
+        ItemMeta meta = this.meta();
         boolean r = meta.removeEnchant(enchantment);
-        meta(meta);
+        this.meta(meta);
 
         return r;
     }
 
     public boolean hasConflictingEnchant(@NotNull Enchantment enchantment) {
-        return meta().hasConflictingEnchant(enchantment);
+        return this.meta().hasConflictingEnchant(enchantment);
     }
 
     public BetterItemStack addEnchantInline(@NotNull Enchantment enchantment, int i, boolean b) {
-        ItemMeta meta = meta();
+        ItemMeta meta = this.meta();
         boolean r = meta.addEnchant(enchantment, i, b);
-        meta(meta);
+        this.meta(meta);
 
         return this;
     }
 
     public BetterItemStack removeEnchantInline(@NotNull Enchantment enchantment) {
-        ItemMeta meta = meta();
+        ItemMeta meta = this.meta();
         boolean r = meta.removeEnchant(enchantment);
-        meta(meta);
+        this.meta(meta);
 
         return this;
     }
 
     public BetterItemStack addItemFlags(@NotNull ItemFlag... itemFlags) {
-        ItemMeta meta = meta();
+        ItemMeta meta = this.meta();
         meta.addItemFlags(itemFlags);
-        meta(meta);
+        this.meta(meta);
 
         return this;
     }
 
     public BetterItemStack removeItemFlags(@NotNull ItemFlag... itemFlags) {
-        ItemMeta meta = meta();
+        ItemMeta meta = this.meta();
         meta.removeItemFlags(itemFlags);
-        meta(meta);
+        this.meta(meta);
 
         return this;
     }
 
     @NotNull
     public Set<ItemFlag> getItemFlags() {
-        return meta().getItemFlags();
+        return this.meta().getItemFlags();
     }
 
     public boolean hasItemFlag(@NotNull ItemFlag itemFlag) {
-        return meta().hasItemFlag(itemFlag);
+        return this.meta().hasItemFlag(itemFlag);
     }
 
     public boolean isUnbreakable() {
-        return meta().isUnbreakable();
+        return this.meta().isUnbreakable();
     }
 
     public BetterItemStack setUnbreakable(boolean b) {
-        ItemMeta meta = meta();
+        ItemMeta meta = this.meta();
         meta.setUnbreakable(b);
-        meta(meta);
+        this.meta(meta);
 
         return this;
     }
 
     public boolean hasAttributeModifiers() {
-        return meta().hasAttributeModifiers();
+        return this.meta().hasAttributeModifiers();
     }
 
     @Nullable
     public Multimap<Attribute, AttributeModifier> getAttributeModifiers() {
-        return meta().getAttributeModifiers();
+        return this.meta().getAttributeModifiers();
     }
 
     @NotNull
     public Multimap<Attribute, AttributeModifier> getAttributeModifiers(@NotNull EquipmentSlot equipmentSlot) {
-        return meta().getAttributeModifiers(equipmentSlot);
+        return this.meta().getAttributeModifiers(equipmentSlot);
     }
 
     @Nullable
     public Collection<AttributeModifier> getAttributeModifiers(@NotNull Attribute attribute) {
-        return meta().getAttributeModifiers(attribute);
+        return this.meta().getAttributeModifiers(attribute);
     }
 
     public boolean addAttributeModifier(@NotNull Attribute attribute, @NotNull AttributeModifier attributeModifier) {
-        ItemMeta meta = meta();
+        ItemMeta meta = this.meta();
         boolean r = meta.addAttributeModifier(attribute, attributeModifier);
-        meta(meta);
+        this.meta(meta);
 
         return r;
     }
 
     public BetterItemStack setAttributeModifiers(@Nullable Multimap<Attribute, AttributeModifier> multimap) {
-        ItemMeta meta = meta();
+        ItemMeta meta = this.meta();
         meta.setAttributeModifiers(multimap);
-        meta(meta);
+        this.meta(meta);
 
         return this;
     }
 
     public boolean removeAttributeModifier(@NotNull Attribute attribute) {
-        ItemMeta meta = meta();
+        ItemMeta meta = this.meta();
         boolean r = meta.removeAttributeModifier(attribute);
-        meta(meta);
+        this.meta(meta);
 
         return r;
     }
 
     public boolean removeAttributeModifier(@NotNull EquipmentSlot equipmentSlot) {
-        ItemMeta meta = meta();
+        ItemMeta meta = this.meta();
         boolean r = meta.removeAttributeModifier(equipmentSlot);
-        meta(meta);
+        this.meta(meta);
 
         return r;
     }
 
     public boolean removeAttributeModifier(@NotNull Attribute attribute, @NotNull AttributeModifier attributeModifier) {
-        ItemMeta meta = meta();
+        ItemMeta meta = this.meta();
         boolean r = meta.removeAttributeModifier(attribute, attributeModifier);
-        meta(meta);
+        this.meta(meta);
 
         return r;
     }
 
     @NotNull
     public CustomItemTagContainer getCustomTagContainer() {
-        return meta().getCustomTagContainer();
+        return this.meta().getCustomTagContainer();
     }
 
     public BetterItemStack setVersion(int i) {
-        ItemMeta meta = meta();
+        ItemMeta meta = this.meta();
         meta.setVersion(i);
-        meta(meta);
+        this.meta(meta);
 
         return this;
     }
 
     @NotNull
     public ItemMeta cloneMeta() {
-        return meta().clone();
+        return this.meta().clone();
     }
 
     //endregion
@@ -281,47 +280,47 @@ public class BetterItemStack {
     //region ItemStack
 
     public Material getType() {
-        return itemStack.getType();
+        return this.itemStack.getType();
     }
 
     public BetterItemStack setType(Material type) {
-        itemStack.setType(type);
+        this.itemStack.setType(type);
 
         return this;
     }
 
     public int getAmount() {
-        return itemStack.getAmount();
+        return this.itemStack.getAmount();
     }
 
     public BetterItemStack setAmount(int amount) {
-        itemStack.setAmount(amount);
+        this.itemStack.setAmount(amount);
 
         return this;
     }
 
     public MaterialData getData() {
-        return itemStack.getData();
+        return this.itemStack.getData();
     }
 
     public BetterItemStack setData(MaterialData data) {
-        itemStack.setData(data);
+        this.itemStack.setData(data);
 
         return this;
     }
 
     public short getDurability() {
-        return itemStack.getDurability();
+        return this.itemStack.getDurability();
     }
 
     public BetterItemStack setDurability(short durability) {
-        itemStack.setDurability(durability);
+        this.itemStack.setDurability(durability);
 
         return this;
     }
 
     public int getMaxStackSize() {
-        return itemStack.getMaxStackSize();
+        return this.itemStack.getMaxStackSize();
     }
 
     public boolean isSimilar(ItemStack itemStack) {
@@ -329,16 +328,16 @@ public class BetterItemStack {
     }
 
     public ItemStack cloneStack() {
-        return itemStack.clone();
+        return this.itemStack.clone();
     }
 
     //endregion
 
     public ItemMeta getItemMeta() {
-        return meta();
+        return this.meta();
     }
 
     public ItemStack getItemStack() {
-        return itemStack;
+        return this.itemStack;
     }
 }

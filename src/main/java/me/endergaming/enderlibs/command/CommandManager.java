@@ -17,7 +17,7 @@ public class CommandManager {
      */
     @Deprecated
     public void registerMainCommand(MainCommand mainCommand) {
-        commandList.add(mainCommand);
+        this.commandList.add(mainCommand);
         mainCommand.register();
 //        commandList.forEach(BaseCommand::register);
     }
@@ -44,7 +44,7 @@ public class CommandManager {
             MessageUtils.log(MessageUtils.LogLevel.SEVERE, "&cTried to register &d" + mainCommand.command + "&c when it is already registered. Please fix!");
             return;
         }
-        commandList.add(mainCommand);
+        this.commandList.add(mainCommand);
         mainCommand.register();
     }
 
@@ -60,7 +60,7 @@ public class CommandManager {
             MessageUtils.log(MessageUtils.LogLevel.WARNING, "&eSub-command(s) still added for command &d" + mainCommand.command);
             return;
         } else {
-            commandList.add(mainCommand);
+            this.commandList.add(mainCommand);
             mainCommand.register();
         }
         Arrays.stream(subCommands).forEach(mainCommand::addSubCommand);

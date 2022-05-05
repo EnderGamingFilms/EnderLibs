@@ -1,4 +1,4 @@
-package me.endergaming.enderlibs.util;
+package me.endergaming.enderlibs.utils;
 
 import org.bukkit.Bukkit;
 import org.bukkit.FireworkEffect;
@@ -28,13 +28,13 @@ public class InstantFirework {
       * new InstantFirework(fireworkEffect, location);
      */
     public InstantFirework(FireworkEffect fe, Location loc) {
-        Firework f = (Firework) loc.getWorld().spawn(loc, Firework.class);
+        Firework f = loc.getWorld().spawn(loc, Firework.class);
         FireworkMeta fm = f.getFireworkMeta();
         fm.addEffect(fe);
         f.setFireworkMeta(fm);
         try {
-            Class<?> entityFireworkClass = getClass("net.minecraft.server.", "EntityFireworks");
-            Class<?> craftFireworkClass = getClass("org.bukkit.craftbukkit.", "entity.CraftFirework");
+            Class<?> entityFireworkClass = this.getClass("net.minecraft.server.", "EntityFireworks");
+            Class<?> craftFireworkClass = this.getClass("org.bukkit.craftbukkit.", "entity.CraftFirework");
             Object firework = craftFireworkClass.cast(f);
             Method handle = firework.getClass().getMethod("getHandle");
             Object entityFirework = handle.invoke(firework);

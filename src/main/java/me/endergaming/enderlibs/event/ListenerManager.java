@@ -6,16 +6,13 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
-import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-
-import static me.endergaming.enderlibs.EnderLibs.getCallingPlugin;
 
 /**
  * Example Usage:
  * <p>
- * JavaPlugin#listenerManager.register(listener);
+ * listenerManager.register(listener);
  */
 public class ListenerManager {
     private final JavaPlugin plugin;
@@ -29,10 +26,10 @@ public class ListenerManager {
      * Registers all {@link Listener} added to the listener list.
      */
     public void registerAll() {
-        if (!listeners.isEmpty()) {
-            unregisterAll();
-            for (Listener listener : listeners)
-                register(listener);
+        if (!this.listeners.isEmpty()) {
+            this.unregisterAll();
+            for (Listener listener : this.listeners)
+                this.register(listener);
         }
     }
 
@@ -40,8 +37,8 @@ public class ListenerManager {
      * Unregisters all {@link Listener} added to the listener list.
      */
     public void unregisterAll() {
-        if (!listeners.isEmpty()) {
-            for (Listener listener : listeners)
+        if (!this.listeners.isEmpty()) {
+            for (Listener listener : this.listeners)
                 HandlerList.unregisterAll(listener);
         }
     }
@@ -52,9 +49,9 @@ public class ListenerManager {
      * @param listener Specified listener to register.
      */
     public void register(Listener listener) {
-        if (!listeners.contains(listener)) {
-            listeners.add(listener);
-            Bukkit.getServer().getPluginManager().registerEvents(listener, plugin);
+        if (!this.listeners.contains(listener)) {
+            this.listeners.add(listener);
+            Bukkit.getServer().getPluginManager().registerEvents(listener, this.plugin);
         }
     }
 
@@ -64,8 +61,8 @@ public class ListenerManager {
      * @param listener Specified listener to unregister.
      */
     public void unregister(Listener listener) {
-        if (listeners.contains(listener)) {
-            listeners.remove(listener);
+        if (this.listeners.contains(listener)) {
+            this.listeners.remove(listener);
             HandlerList.unregisterAll(listener);
         }
     }

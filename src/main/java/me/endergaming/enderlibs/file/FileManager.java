@@ -1,7 +1,7 @@
 package me.endergaming.enderlibs.file;
 
-import me.endergaming.enderlibs.EnderLibs;
 import me.endergaming.enderlibs.text.MessageUtils;
+import me.endergaming.enderlibs.utils.ServerUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -34,8 +34,10 @@ public class FileManager {
      * @return org.bukkit.configuration.file.FileConfiguration
      */
     public static FileConfiguration getConfig(String path, String ext) {
-        JavaPlugin instance = (JavaPlugin) EnderLibs.getCallingPlugin();
-        if (instance == null) throw new NullPointerException("Obtained plugin instance was null.");
+        JavaPlugin instance = (JavaPlugin) ServerUtils.getCallingPlugin();
+        if (instance == null) {
+            throw new NullPointerException("Obtained plugin instance was null.");
+        }
         return YamlConfiguration.loadConfiguration(getFile(path, ext, instance));
     }
 
@@ -49,8 +51,10 @@ public class FileManager {
      * @return java.io.File
      */
     public static File getFile(String path, String ext) {
-        JavaPlugin instance = (JavaPlugin) EnderLibs.getCallingPlugin();
-        if (instance == null) throw new NullPointerException("Obtained plugin instance was null.");
+        JavaPlugin instance = (JavaPlugin) ServerUtils.getCallingPlugin();
+        if (instance == null) {
+            throw new NullPointerException("Obtained plugin instance was null.");
+        }
         return getFile(path, ext, instance);
     }
 
@@ -78,23 +82,17 @@ public class FileManager {
             try {
                 instance.saveResource(path.replace(".", File.separator).concat("." + ext), true);
                 MessageUtils.log(MessageUtils.LogLevel.WARNING, ChatColor.GREEN + fileName + " did not exist so one was created");
-            } catch (Exception e) {
-                MessageUtils.log(MessageUtils.LogLevel.WARNING, ChatColor.RED + "There was an issue creating " + fileName);
-                e.printStackTrace();
+            } catch (Exception ignored) {
+                try {
+//                    noinspection ResultOfMethodCallIgnored
+                    file.createNewFile();
+                    MessageUtils.log(MessageUtils.LogLevel.WARNING, ChatColor.YELLOW + fileName + " did not exist so one was created");
+                } catch (Exception e) {
+                    MessageUtils.log(MessageUtils.LogLevel.WARNING, ChatColor.RED + "There was an issue creating " + fileName);
+                    e.printStackTrace();
+                }
             }
         }
         return file;
-    }
-
-    /**
-     * Simple integer parser. (Prevents NumberFormatExceptions)
-     */
-    public static boolean validateInt(String s) {
-        try {
-            Integer.parseInt(s);
-            return true;
-        } catch (NumberFormatException ignored) {
-            return false;
-        }
     }
 }
