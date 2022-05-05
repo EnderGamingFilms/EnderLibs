@@ -1,4 +1,4 @@
-name: DWToolkit
+name: EnderLibs
 version: ${project.version}
 main: me.endergaming.enderlibs.Main
 api-version: 1.16
