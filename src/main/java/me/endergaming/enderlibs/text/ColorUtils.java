@@ -3,29 +3,65 @@ package me.endergaming.enderlibs.text;
 
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Color;
+import org.bukkit.DyeColor;
 
+import java.util.HashMap;
 import java.util.regex.Pattern;
 
 public class ColorUtils {
+    private static final Pattern HEX_PATTERN = Pattern.compile("^#([a-fA-F0-9]{6})$");
+    private static final HashMap<DyeColor, ChatColor> dyeChatMap = new HashMap<>(16);
+
+    static {
+        dyeChatMap.put(DyeColor.BLACK, ChatColor.BLACK);
+        dyeChatMap.put(DyeColor.BLUE, ChatColor.DARK_BLUE);
+        dyeChatMap.put(DyeColor.BROWN, ChatColor.GOLD);
+        dyeChatMap.put(DyeColor.CYAN, ChatColor.AQUA);
+        dyeChatMap.put(DyeColor.GRAY, ChatColor.DARK_GRAY);
+        dyeChatMap.put(DyeColor.GREEN, ChatColor.DARK_GREEN);
+        dyeChatMap.put(DyeColor.LIGHT_BLUE, ChatColor.BLUE);
+        dyeChatMap.put(DyeColor.LIME, ChatColor.GREEN);
+        dyeChatMap.put(DyeColor.MAGENTA, ChatColor.LIGHT_PURPLE);
+        dyeChatMap.put(DyeColor.ORANGE, ChatColor.GOLD);
+        dyeChatMap.put(DyeColor.PINK, ChatColor.LIGHT_PURPLE);
+        dyeChatMap.put(DyeColor.PURPLE, ChatColor.DARK_PURPLE);
+        dyeChatMap.put(DyeColor.RED, ChatColor.DARK_RED);
+        dyeChatMap.put(DyeColor.LIGHT_GRAY, ChatColor.GRAY);
+        dyeChatMap.put(DyeColor.WHITE, ChatColor.WHITE);
+        dyeChatMap.put(DyeColor.YELLOW, ChatColor.YELLOW);
+    }
+
+    public static ChatColor dyeToChat(DyeColor dye) {
+        if (dyeChatMap.containsKey(dye)) {
+            return dyeChatMap.get(dye);
+        }
+        return ChatColor.MAGIC;
+    }
+
+
     /**
      * Convert color codes and hex codes to Color container (RGB Container)
+     *
      * @param value Must match one of these formats "#FFFFFF" or "&c"
      * @return org.bukkit.Color
      */
     public static Color getRGBFromCode(String value) {
-        return value.replace("#", "").matches("^([a-fA-F0-9]{6})$") ? hex2Rgb(value) : minecraft2Rgb(value);
+        return HEX_PATTERN.matcher(value).matches() ? hex2Rgb(value) : minecraft2Rgb(value);
     }
 
     /**
      * Convert string to a ChatColor object
+     *
      * @param value Must match one of these formats "#FFFFFF" or "&c"
      * @return net.md_5.bungee.api.ChatColor
      */
     public static ChatColor getChatColorFromCode(String value) {
-        if (value.matches("&([A-z0-9]){1}")) {
-            if (value.length() <= 1) return ChatColor.WHITE;
+        if (value.matches("&([A-z0-9])")) {
+            if (value.length() <= 1) {
+                return ChatColor.WHITE;
+            }
             return ChatColor.getByChar(value.charAt(1));
-        } else if (value.matches("^#([a-fA-F0-9]{6})$")) {
+        } else if (HEX_PATTERN.matcher(value).matches()) {
             return ChatColor.of(value);
         } else {
             return ChatColor.WHITE;
@@ -33,8 +69,19 @@ public class ColorUtils {
     }
 
     /**
+     * Convert hex color code to default chat color (this is a bit finicky)
+     *
+     * @param hex Must match one of these formats "#FFFFFF" or "&c"
+     * @return net.md_5.bungee.api.ChatColor
+     */
+    public static ChatColor getChatColorFromHex(String hex) {
+        return dyeToChat(DyeColor.getByColor(hex2Rgb(hex)));
+    }
+
+    /**
      * Convert a string to a Color object
-     * @param value A properly formatted "R,G,B" string
+     *
+     * @param value     A properly formatted "R,G,B" string
      * @param separator Separator used to form the "R,G,B" string
      * @return org.bukkit.Color
      */
@@ -45,6 +92,7 @@ public class ColorUtils {
 
     /**
      * Convert a string to a Color object
+     *
      * @param value A properly formatted "R G B" string
      * @return org.bukkit.Color
      */
@@ -54,7 +102,8 @@ public class ColorUtils {
 
     /**
      * Convert a Color object to "R,G,B" readable format
-     * @param color org.bukkit.Color
+     *
+     * @param color     org.bukkit.Color
      * @param separator Separator used to form the "R,G,B" string
      * @return A readable "R,G,B" string
      */
@@ -64,6 +113,7 @@ public class ColorUtils {
 
     /**
      * Convert a Color object to "R G B" readable format
+     *
      * @param color org.bukkit.Color
      * @return A readable "R G B" string
      */
@@ -74,6 +124,7 @@ public class ColorUtils {
 
     /**
      * Converts "#FFFFFF" format to a Color object containing RGB values
+     *
      * @param value Must be in format "#FFFFFF"
      * @return org.bukkit.Color
      */
@@ -99,6 +150,7 @@ public class ColorUtils {
 
     /**
      * Converts "&c" format to a Color object containing RGB values
+     *
      * @param value Must be in format "&0"
      * @return org.bukkit.Color
      */

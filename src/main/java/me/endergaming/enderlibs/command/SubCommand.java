@@ -33,16 +33,16 @@ public abstract class SubCommand extends BaseCommand {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         // Do permission check
-        if (permission != null && !sender.hasPermission(permission)) {
+        if (this.permission != null && !sender.hasPermission(this.permission)) {
             MessageUtils.send(sender, INVALID_PERMISSION);
             return true;
         }
         // Argument Check
-        if (hasCommandArgs) {
-            if (args.length == 0 || !subCommandMap.containsKey(args[0])) {
+        if (this.hasCommandArgs) {
+            if (args.length == 0 || !this.subCommandMap.containsKey(args[0])) {
                 MessageUtils.send(sender, this);
             } else {
-                subCommandMap.get(args[0]).run(sender, cmd, label, args);
+                this.subCommandMap.get(args[0]).run(sender, cmd, label, args);
             }
             return true;
         }
@@ -68,11 +68,11 @@ public abstract class SubCommand extends BaseCommand {
     }
 
     public Map<String, SubCommand> getSubCommandMap() {
-        return subCommandMap;
+        return this.subCommandMap;
     }
 
     public String getName() {
-        return command;
+        return this.command;
     }
 
     /**

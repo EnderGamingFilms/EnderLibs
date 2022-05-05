@@ -1,6 +1,5 @@
-package me.endergaming.enderlibs.util;
+package me.endergaming.enderlibs.utils;
 
-import me.endergaming.enderlibs.EnderLibs;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
@@ -8,6 +7,7 @@ import java.util.function.Consumer;
 
 /**
  * Simple utility for Bukkit scheduler tasks, essentially just shorthand
+ *
  * @author Redempt
  */
 public class Task {
@@ -19,14 +19,14 @@ public class Task {
      * @return The Task that has been scheduled
      */
     public static Task syncDelayed(Runnable run) {
-        return syncDelayed(EnderLibs.getCallingPlugin(), run);
+        return syncDelayed(ServerUtils.getCallingPlugin(), run);
     }
 
     /**
      * Schedules a sync delayed task to run as soon as possible
      *
      * @param plugin The plugin scheduling the task
-     * @param run The task to run
+     * @param run    The task to run
      * @return The Task that has been scheduled
      */
     public static Task syncDelayed(Plugin plugin, Runnable run) {
@@ -40,14 +40,14 @@ public class Task {
      * @return The Task that has been scheduled
      */
     public static Task syncDelayed(Consumer<Task> run) {
-        return syncDelayed(EnderLibs.getCallingPlugin(), run);
+        return syncDelayed(ServerUtils.getCallingPlugin(), run);
     }
 
     /**
      * Schedules a sync delayed task to run as soon as possible
      *
      * @param plugin The plugin scheduling the task
-     * @param run The task to run
+     * @param run    The task to run
      * @return The Task that has been scheduled
      */
     public static Task syncDelayed(Plugin plugin, Consumer<Task> run) {
@@ -57,20 +57,20 @@ public class Task {
     /**
      * Schedules a sync delayed task to run after a delay
      *
-     * @param run The task to run
+     * @param run   The task to run
      * @param delay The delay in ticks to wait before running the task
      * @return The Task that has been scheduled
      */
     public static Task syncDelayed(Runnable run, long delay) {
-        return syncDelayed(EnderLibs.getCallingPlugin(), run, delay);
+        return syncDelayed(ServerUtils.getCallingPlugin(), run, delay);
     }
 
     /**
      * Schedules a sync delayed task to run after a delay
      *
      * @param plugin The plugin scheduling the task
-     * @param run The task to run
-     * @param delay The delay in ticks to wait before running the task
+     * @param run    The task to run
+     * @param delay  The delay in ticks to wait before running the task
      * @return The Task that has been scheduled
      */
     public static Task syncDelayed(Plugin plugin, Runnable run, long delay) {
@@ -80,20 +80,20 @@ public class Task {
     /**
      * Schedules a sync delayed task to run after a delay
      *
-     * @param run The task to run
+     * @param run   The task to run
      * @param delay The delay in ticks to wait before running the task
      * @return The Task that has been scheduled
      */
     public static Task syncDelayed(Consumer<Task> run, long delay) {
-        return syncDelayed(EnderLibs.getCallingPlugin(), run, delay);
+        return syncDelayed(ServerUtils.getCallingPlugin(), run, delay);
     }
 
     /**
      * Schedules a sync delayed task to run after a delay
      *
      * @param plugin The plugin scheduling the task
-     * @param run The task to run
-     * @param delay The delay in ticks to wait before running the task
+     * @param run    The task to run
+     * @param delay  The delay in ticks to wait before running the task
      * @return The Task that has been scheduled
      */
     public static Task syncDelayed(Plugin plugin, Consumer<Task> run, long delay) {
@@ -105,21 +105,21 @@ public class Task {
     /**
      * Schedules a sync repeating task to run later
      *
-     * @param run The task to run
-     * @param delay The delay in ticks to wait before running the task
+     * @param run    The task to run
+     * @param delay  The delay in ticks to wait before running the task
      * @param period The number of ticks between executions of the task
      * @return The Task that has been scheduled
      */
     public static Task syncRepeating(Runnable run, long delay, long period) {
-        return syncRepeating(EnderLibs.getCallingPlugin(), run, delay, period);
+        return syncRepeating(ServerUtils.getCallingPlugin(), run, delay, period);
     }
 
     /**
      * Schedules a sync repeating task to run later
      *
      * @param plugin The plugin scheduling the task
-     * @param run The task to run
-     * @param delay The delay in ticks to wait before running the task
+     * @param run    The task to run
+     * @param delay  The delay in ticks to wait before running the task
      * @param period The number of ticks between executions of the task
      * @return The Task that has been scheduled
      */
@@ -130,21 +130,21 @@ public class Task {
     /**
      * Schedules a sync repeating task to run later
      *
-     * @param run The task to run
-     * @param delay The delay in ticks to wait before running the task
+     * @param run    The task to run
+     * @param delay  The delay in ticks to wait before running the task
      * @param period The number of ticks between executions of the task
      * @return The Task that has been scheduled
      */
     public static Task syncRepeating(Consumer<Task> run, long delay, long period) {
-        return syncRepeating(EnderLibs.getCallingPlugin(), run, delay, period);
+        return syncRepeating(ServerUtils.getCallingPlugin(), run, delay, period);
     }
 
     /**
      * Schedules a sync repeating task to run later
      *
      * @param plugin The plugin scheduling the task
-     * @param run The task to run
-     * @param delay The delay in ticks to wait before running the task
+     * @param run    The task to run
+     * @param delay  The delay in ticks to wait before running the task
      * @param period The number of ticks between executions of the task
      * @return The Task that has been scheduled
      */
@@ -161,14 +161,14 @@ public class Task {
      * @return The Task that has been scheduled
      */
     public static Task asyncDelayed(Runnable run) {
-        return asyncDelayed(EnderLibs.getCallingPlugin(), run);
+        return asyncDelayed(ServerUtils.getCallingPlugin(), run);
     }
 
     /**
      * Schedules an async delayed task to run as soon as possible
      *
      * @param plugin The plugin scheduling the task
-     * @param run The task to run
+     * @param run    The task to run
      * @return The Task that has been scheduled
      */
     public static Task asyncDelayed(Plugin plugin, Runnable run) {
@@ -182,14 +182,14 @@ public class Task {
      * @return The Task that has been scheduled
      */
     public static Task asyncDelayed(Consumer<Task> run) {
-        return asyncDelayed(EnderLibs.getCallingPlugin(), run);
+        return asyncDelayed(ServerUtils.getCallingPlugin(), run);
     }
 
     /**
      * Schedules an async delayed task to run as soon as possible
      *
      * @param plugin The plugin scheduling the task
-     * @param run The task to run
+     * @param run    The task to run
      * @return The Task that has been scheduled
      */
     public static Task asyncDelayed(Plugin plugin, Consumer<Task> run) {
@@ -199,20 +199,20 @@ public class Task {
     /**
      * Schedules an async delayed task to run after a delay
      *
-     * @param run The task to run
+     * @param run   The task to run
      * @param delay The delay in ticks to wait before running the task
      * @return The Task that has been scheduled
      */
     public static Task asyncDelayed(Runnable run, long delay) {
-        return asyncDelayed(EnderLibs.getCallingPlugin(), run, delay);
+        return asyncDelayed(ServerUtils.getCallingPlugin(), run, delay);
     }
 
     /**
      * Schedules an async delayed task to run after a delay
      *
      * @param plugin The plugin scheduling the task
-     * @param run The task to run
-     * @param delay The delay in ticks to wait before running the task
+     * @param run    The task to run
+     * @param delay  The delay in ticks to wait before running the task
      * @return The Task that has been scheduled
      */
     public static Task asyncDelayed(Plugin plugin, Runnable run, long delay) {
@@ -222,20 +222,20 @@ public class Task {
     /**
      * Schedules an async delayed task to run after a delay
      *
-     * @param run The task to run
+     * @param run   The task to run
      * @param delay The delay in ticks to wait before running the task
      * @return The Task that has been scheduled
      */
     public static Task asyncDelayed(Consumer<Task> run, long delay) {
-        return asyncDelayed(EnderLibs.getCallingPlugin(), run, delay);
+        return asyncDelayed(ServerUtils.getCallingPlugin(), run, delay);
     }
 
     /**
      * Schedules an async delayed task to run after a delay
      *
      * @param plugin The plugin scheduling the task
-     * @param run The task to run
-     * @param delay The delay in ticks to wait before running the task
+     * @param run    The task to run
+     * @param delay  The delay in ticks to wait before running the task
      * @return The Task that has been scheduled
      */
     public static Task asyncDelayed(Plugin plugin, Consumer<Task> run, long delay) {
@@ -247,21 +247,21 @@ public class Task {
     /**
      * Schedules an async repeating task to run later
      *
-     * @param run The task to run
-     * @param delay The delay in ticks to wait before running the task
+     * @param run    The task to run
+     * @param delay  The delay in ticks to wait before running the task
      * @param period The number of ticks between executions of the task
      * @return The Task that has been scheduled
      */
     public static Task asyncRepeating(Consumer<Task> run, long delay, long period) {
-        return asyncRepeating(EnderLibs.getCallingPlugin(), run, delay, period);
+        return asyncRepeating(ServerUtils.getCallingPlugin(), run, delay, period);
     }
 
     /**
      * Schedules an async repeating task to run later
      *
      * @param plugin The plugin scheduling the task
-     * @param run The task to run
-     * @param delay The delay in ticks to wait before running the task
+     * @param run    The task to run
+     * @param delay  The delay in ticks to wait before running the task
      * @param period The number of ticks between executions of the task
      * @return The Task that has been scheduled
      */
@@ -274,21 +274,21 @@ public class Task {
     /**
      * Schedules an async repeating task to run later
      *
-     * @param run The task to run
-     * @param delay The delay in ticks to wait before running the task
+     * @param run    The task to run
+     * @param delay  The delay in ticks to wait before running the task
      * @param period The number of ticks between executions of the task
      * @return The Task that has been scheduled
      */
     public static Task asyncRepeating(Runnable run, long delay, long period) {
-        return asyncRepeating(EnderLibs.getCallingPlugin(), run, delay, period);
+        return asyncRepeating(ServerUtils.getCallingPlugin(), run, delay, period);
     }
 
     /**
      * Schedules an async repeating task to run later
      *
      * @param plugin The plugin scheduling the task
-     * @param run The task to run
-     * @param delay The delay in ticks to wait before running the task
+     * @param run    The task to run
+     * @param delay  The delay in ticks to wait before running the task
      * @param period The number of ticks between executions of the task
      * @return The Task that has been scheduled
      */
@@ -296,9 +296,9 @@ public class Task {
         return asyncRepeating(plugin, t -> run.run(), delay, period);
     }
 
-    private int task;
-    private TaskType type;
-    private Plugin plugin;
+    private final int task;
+    private final TaskType type;
+    private final Plugin plugin;
 
     private Task(int task, TaskType type, Plugin plugin) {
         this.task = task;
@@ -310,35 +310,35 @@ public class Task {
      * @return The type of this Task
      */
     public TaskType getType() {
-        return type;
+        return this.type;
     }
 
     /**
      * @return Whether this Task is queued, same as {@link org.bukkit.scheduler.BukkitScheduler#isQueued(int)}
      */
     public boolean isQueued() {
-        return Bukkit.getScheduler().isQueued(task);
+        return Bukkit.getScheduler().isQueued(this.task);
     }
 
     /**
      * @return Whether this Task is currently running, same as {@link org.bukkit.scheduler.BukkitScheduler#isCurrentlyRunning(int)}
      */
     public boolean isCurrentlyRunning() {
-        return Bukkit.getScheduler().isCurrentlyRunning(task);
+        return Bukkit.getScheduler().isCurrentlyRunning(this.task);
     }
 
     /**
      * Cancels this task, same as {@link org.bukkit.scheduler.BukkitScheduler#cancelTask(int)}
      */
     public void cancel() {
-        Bukkit.getScheduler().cancelTask(task);
+        Bukkit.getScheduler().cancelTask(this.task);
     }
 
     /**
      * @return The Plugin which scheduled this task
      */
     public Plugin getPlugin() {
-        return plugin;
+        return this.plugin;
     }
 
     /**
@@ -349,7 +349,7 @@ public class Task {
         SYNC_DELAYED,
         ASYNC_DELAYED,
         SYNC_REPEATING,
-        ASYNC_REPEATING;
+        ASYNC_REPEATING
 
     }
 

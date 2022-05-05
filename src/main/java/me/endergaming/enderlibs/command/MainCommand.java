@@ -13,7 +13,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static me.endergaming.enderlibs.file.Responses.*;
+import static me.endergaming.enderlibs.file.Responses.INVALID_PERMISSION;
+import static me.endergaming.enderlibs.file.Responses.NON_PLAYER;
 
 
 public abstract class MainCommand extends BaseCommand {
@@ -42,23 +43,23 @@ public abstract class MainCommand extends BaseCommand {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         // Do permission check
-        if (!sender.hasPermission(permission)) {
+        if (!sender.hasPermission(this.permission)) {
             MessageUtils.send(sender, INVALID_PERMISSION);
             return true;
         }
         // Player Check
-        if (playerOnly) {
+        if (this.playerOnly) {
             if (!(sender instanceof Player)) {
                 MessageUtils.send(sender, NON_PLAYER);
                 return true;
             }
         }
         // Argument Check
-        if (hasCommandArgs) {
-            if (args.length == 0 || !subCommandMap.containsKey(args[0])) {
+        if (this.hasCommandArgs) {
+            if (args.length == 0 || !this.subCommandMap.containsKey(args[0])) {
                 MessageUtils.send(sender, this);
             } else {
-                subCommandMap.get(args[0]).run(sender, cmd, label, args);
+                this.subCommandMap.get(args[0]).run(sender, cmd, label, args);
             }
             return true;
         }
@@ -78,13 +79,13 @@ public abstract class MainCommand extends BaseCommand {
     public abstract void run(CommandSender sender, Command cmd, String label, String[] args);
 
     public MainCommand addSubCommand(SubCommand subCommand) {
-        subCommand.setPermission(String.format("%s.command.%s.%s", plugin.getName().toLowerCase(), command, subCommand.command));
+        subCommand.setPermission(String.format("%s.command.%s.%s", this.plugin.getName().toLowerCase(), this.command, subCommand.command));
         this.subCommandMap.put(subCommand.command, subCommand);
         return this;
     }
 
     public Map<String, SubCommand> getSubCommandMap() {
-        return subCommandMap;
+        return this.subCommandMap;
     }
 
     public String getName() {

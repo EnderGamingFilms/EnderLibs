@@ -1,4 +1,4 @@
-package me.endergaming.enderlibs.util;
+package me.endergaming.enderlibs.utils;
 
 import org.jetbrains.annotations.Nullable;
 import org.json.simple.JSONObject;
@@ -13,10 +13,13 @@ import java.util.UUID;
 
 public class MojangAPI {
     @Nullable
-    public static UUID getMojangPlayerUUID(String name) {
-        UUID playerUUID = null;
+    public static PlayerProfile getPlayerProfile(String username) {
+        PlayerProfile profile = null;
         try {
-            URL enjinurl = getUrl(name);
+            UUID playerUUID = null;
+            String name = "";
+            // Create URL
+            URL enjinurl = getUrl(username);
             HttpURLConnection con = (HttpURLConnection) enjinurl.openConnection();
             con.setReadTimeout(5000);
             con.setConnectTimeout(5000);
@@ -26,21 +29,25 @@ public class MojangAPI {
             con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             InputStream in = con.getInputStream();
             String json = parseInput(in);
+            // Parse api return
             if (!json.equals("")) {
                 JSONParser parser = new JSONParser();
                 JSONObject result = (JSONObject) parser.parse(json);
                 String id = result.get("id").toString();
+                name = result.get("name").toString();
                 if (id.length() == 32) {
                     id = id.substring(0, 8) + "-" + id.substring(8, 12) + "-" + id.substring(12, 16) + "-" + id.substring(16, 20) + "-" + id.substring(20, 32);
                 }
                 if (id.length() == 36) {
                     playerUUID = UUID.fromString(id);
                 }
+
+                if (!name.isEmpty() && playerUUID != null) profile = new PlayerProfile(name, playerUUID);
             }
         } catch (Throwable e) {
             e.printStackTrace();
         }
-        return playerUUID;
+        return profile;
     }
 
     private static URL getUrl(String name) throws Throwable {

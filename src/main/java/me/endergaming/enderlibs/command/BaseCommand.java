@@ -99,9 +99,9 @@ public abstract class BaseCommand implements CommandExecutor, TabExecutor {
         if (this.description != null) cmd.setDescription(this.description);
         if (this.usage != null) cmd.setUsage(this.usage);
         if (this.permMessage != null) cmd.setPermissionMessage(this.permMessage);
-        getCommandMap().register("", cmd);
+        this.getCommandMap().register("", cmd);
         cmd.setExecutor(this);
-        registered = true;
+        this.registered = true;
     }
 
     public String getUsage() {
@@ -118,14 +118,14 @@ public abstract class BaseCommand implements CommandExecutor, TabExecutor {
                 final Field f = Bukkit.getServer().getClass().getDeclaredField("commandMap");
                 f.setAccessible(true);
                 cmap = (CommandMap) f.get(Bukkit.getServer());
-                return getCommandMap();
+                return this.getCommandMap();
             } catch (Exception e) {
                 e.printStackTrace();
             }
         } else {
             return cmap;
         }
-        return getCommandMap();
+        return this.getCommandMap();
     }
 
     private final class ReflectCommand extends Command {
@@ -141,13 +141,13 @@ public abstract class BaseCommand implements CommandExecutor, TabExecutor {
 
         @Override
         public boolean execute(CommandSender sender, String commandLabel, String[] args) {
-            return exe != null && exe.onCommand(sender, this, commandLabel, args);
+            return this.exe != null && this.exe.onCommand(sender, this, commandLabel, args);
         }
 
         @Override
         public List<String> tabComplete(CommandSender sender, String alias, String[] args) {
-            if (exe != null) {
-                return exe.onTabComplete(sender, this, alias, args);
+            if (this.exe != null) {
+                return this.exe.onTabComplete(sender, this, alias, args);
             }
             return null;
         }

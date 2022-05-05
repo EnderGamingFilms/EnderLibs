@@ -11,23 +11,23 @@ import java.util.function.Function;
  */
 public class SQLCache {
 
-    private String tableName;
-    private String columnName;
-    private String[] primaryKeyNames;
-    private String deleteQuery;
-    private String selectQuery;
-    private String updateQuery;
-    private Map<SQLCacheEntry, Object> cache = new HashMap<>();
-    private Set<SQLCacheEntry> modified = new HashSet<>();
-    private SQLHelper sql;
+    private final String tableName;
+    private final String columnName;
+    private final String[] primaryKeyNames;
+    private final String deleteQuery;
+    private final String selectQuery;
+    private final String updateQuery;
+    private final Map<SQLCacheEntry, Object> cache = new HashMap<>();
+    private final Set<SQLCacheEntry> modified = new HashSet<>();
+    private final SQLHelper sql;
 
     protected SQLCache(SQLHelper sql, String tableName, String columnName, String... primaryKeyNames) {
         this.tableName = tableName;
         this.columnName = columnName;
         this.primaryKeyNames = primaryKeyNames;
-        deleteQuery = "DELETE FROM " + this.tableName + " WHERE " + repeat(primaryKeyNames, " = ?", " AND ");
-        selectQuery = "SELECT " + columnName + " FROM " + this.tableName + " WHERE " + repeat(primaryKeyNames, " = ?", " AND ");
-        updateQuery = "UPDATE " + this.tableName + " SET " + columnName + " = ? WHERE " + repeat(primaryKeyNames, " = ?", " AND ");
+        this.deleteQuery = "DELETE FROM " + this.tableName + " WHERE " + this.repeat(primaryKeyNames, " = ?", " AND ");
+        this.selectQuery = "SELECT " + columnName + " FROM " + this.tableName + " WHERE " + this.repeat(primaryKeyNames, " = ?", " AND ");
+        this.updateQuery = "UPDATE " + this.tableName + " SET " + columnName + " = ? WHERE " + this.repeat(primaryKeyNames, " = ?", " AND ");
         this.sql = sql;
     }
 
@@ -46,30 +46,30 @@ public class SQLCache {
      * @return The name of the table this SQLCache is for
      */
     public String getTableName() {
-        return tableName;
+        return this.tableName;
     }
 
     /**
      * @return The name of the column this SQLCache is for
      */
     public String getColumnName() {
-        return columnName;
+        return this.columnName;
     }
 
     /**
      * @return The names of the primary keys used to access and mutate the column this SQLCache is for
      */
     public String[] getPrimaryKeyNames() {
-        return primaryKeyNames;
+        return this.primaryKeyNames;
     }
 
     protected boolean keyNamesMatch(String[] matches) {
         for (String match : matches) {
-            if (match.equals(columnName)) {
+            if (match.equals(this.columnName)) {
                 return true;
             }
         }
-        for (String key : primaryKeyNames) {
+        for (String key : this.primaryKeyNames) {
             for (String match : matches) {
                 if (key.equals(match)) {
                     return true;
@@ -80,8 +80,8 @@ public class SQLCache {
     }
 
     private void checkKeys(Object... primaryKeys) {
-        if (primaryKeys.length != primaryKeyNames.length) {
-            throw new IllegalArgumentException("Expected " + primaryKeyNames.length + " primary keys, got " + primaryKeys.length);
+        if (primaryKeys.length != this.primaryKeyNames.length) {
+            throw new IllegalArgumentException("Expected " + this.primaryKeyNames.length + " primary keys, got " + primaryKeys.length);
         }
     }
 
@@ -92,8 +92,8 @@ public class SQLCache {
      * @param primaryKeys The keys to use to delete the row
      */
     public void delete(Object... primaryKeys) {
-        remove(primaryKeys);
-        sql.execute(deleteQuery, primaryKeys);
+        this.remove(primaryKeys);
+        this.sql.execute(this.deleteQuery, primaryKeys);
     }
 
     /**
@@ -102,10 +102,10 @@ public class SQLCache {
      * @param primaryKeys The keys used to access the value
      */
     public void remove(Object... primaryKeys) {
-        checkKeys(primaryKeys);
+        this.checkKeys(primaryKeys);
         SQLCacheEntry entry = new SQLCacheEntry(primaryKeys);
-        modified.remove(entry);
-        cache.remove(entry);
+        this.modified.remove(entry);
+        this.cache.remove(entry);
     }
 
     /**
@@ -115,14 +115,14 @@ public class SQLCache {
      * @param primaryKeys The primary keys used to mutate the row
      */
     public void update(Object value, Object... primaryKeys) {
-        checkKeys(primaryKeys);
+        this.checkKeys(primaryKeys);
         SQLCacheEntry entry = new SQLCacheEntry(primaryKeys);
-        if (!cache.containsKey(entry)) {
+        if (!this.cache.containsKey(entry)) {
             return;
         }
-        cache.remove(entry);
-        modified.add(entry);
-        cache.put(entry, value);
+        this.cache.remove(entry);
+        this.modified.add(entry);
+        this.cache.put(entry, value);
     }
 
     /**
@@ -133,7 +133,7 @@ public class SQLCache {
      * @return The value
      */
     public <T> T select(Object... primaryKeys) {
-        return (T) select(o -> sql.querySingleResult(selectQuery, primaryKeys), primaryKeys);
+        return (T) this.select(o -> this.sql.querySingleResult(this.selectQuery, primaryKeys), primaryKeys);
     }
 
     /**
@@ -143,7 +143,7 @@ public class SQLCache {
      * @return The String value
      */
     public String selectString(Object... primaryKeys) {
-        return (String) select(o -> sql.querySingleResultString(selectQuery, primaryKeys), primaryKeys);
+        return (String) this.select(o -> this.sql.querySingleResultString(this.selectQuery, primaryKeys), primaryKeys);
     }
 
     /**
@@ -153,7 +153,7 @@ public class SQLCache {
      * @return The Long value
      */
     public Long selectLong(Object... primaryKeys) {
-        return (Long) select(o -> sql.querySingleResultLong(selectQuery, primaryKeys), primaryKeys);
+        return (Long) this.select(o -> this.sql.querySingleResultLong(this.selectQuery, primaryKeys), primaryKeys);
     }
 
     /**
@@ -163,18 +163,18 @@ public class SQLCache {
      * @return Whether the value has been cached
      */
     public boolean isCached(Object... primaryKeys) {
-        return cache.containsKey(new SQLCacheEntry(primaryKeys));
+        return this.cache.containsKey(new SQLCacheEntry(primaryKeys));
     }
 
     private Object select(Function<Object[], ?> supplier, Object... primaryKeys) {
-        checkKeys(primaryKeys);
+        this.checkKeys(primaryKeys);
         SQLCacheEntry entry = new SQLCacheEntry(primaryKeys);
         Object value;
-        if (!cache.containsKey(entry)) {
+        if (!this.cache.containsKey(entry)) {
             value = supplier.apply(primaryKeys);
-            cache.put(entry, value);
+            this.cache.put(entry, value);
         } else {
-            value = cache.get(entry);
+            value = this.cache.get(entry);
         }
         return value;
     }
@@ -184,23 +184,23 @@ public class SQLCache {
      * No updates performed through {@link SQLCache#update(Object, Object...)} will be committed!
      */
     public void clear() {
-        cache.clear();
+        this.cache.clear();
     }
 
     /**
      * Flushes the cache, saving all changes that were made.
      */
     public void flush() {
-        modified.forEach(s -> {
-            Object val = cache.get(s);
+        this.modified.forEach(s -> {
+            Object val = this.cache.get(s);
             Object[] objs = new Object[s.getParams().length + 1];
             objs[0] = val;
             for (int i = 0; i < s.getParams().length; i++) {
                 objs[i + 1] = s.getParams()[i];
             }
-            sql.execute(updateQuery, objs);
+            this.sql.execute(this.updateQuery, objs);
         });
-        modified.clear();
+        this.modified.clear();
     }
 
     /**
@@ -210,7 +210,7 @@ public class SQLCache {
      */
     public void flush(Object... primaryKeys) {
         SQLCacheEntry entry = new SQLCacheEntry(primaryKeys);
-        Object val = cache.get(entry);
+        Object val = this.cache.get(entry);
         if (val == null) {
             return;
         }
@@ -219,8 +219,8 @@ public class SQLCache {
         for (int i = 0; i < entry.getParams().length; i++) {
             objs[i + 1] = entry.getParams()[i];
         }
-        sql.execute(updateQuery, objs);
-        modified.remove(entry);
+        this.sql.execute(this.updateQuery, objs);
+        this.modified.remove(entry);
     }
 
 }
