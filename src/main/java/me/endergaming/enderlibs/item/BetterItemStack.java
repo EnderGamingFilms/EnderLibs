@@ -16,10 +16,17 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
+/**
+ * {@link BetterItemStack} provides an easier way of interacting with {@link ItemStack}s and their corresponding {@link ItemMeta}s
+ */
 public class BetterItemStack {
 
     private final ItemStack itemStack;
 
+    /**
+     * {@link BetterItemStack} provides an easier way of interacting with {@link ItemStack}s and their corresponding {@link ItemMeta}s
+     * @param itemStack The {@link ItemStack} to link to this instance
+     */
     public BetterItemStack(ItemStack itemStack) {
         this.itemStack = itemStack;
     }
@@ -33,15 +40,26 @@ public class BetterItemStack {
         this.itemStack.setItemMeta(meta);
     }
 
+    /**
+     * @return Whether the linked {@link ItemStack} has a custom display name set
+     */
     public boolean hasDisplayName() {
         return this.meta().hasDisplayName();
     }
 
+    /**
+     * @return The custom display name of the linked {@link ItemStack}
+     */
     @NotNull
     public String getDisplayName() {
         return this.meta().getDisplayName();
     }
 
+    /**
+     * Set the custom display name of the linked {@link ItemStack}
+     * @param s The text to set the custom display name to
+     * @return This instance of {@link BetterItemStack}
+     */
     public BetterItemStack setDisplayName(@Nullable String s) {
          ItemMeta meta = this.meta();
          meta.setDisplayName(s);
@@ -54,11 +72,19 @@ public class BetterItemStack {
         return this.meta().hasLocalizedName();
     }
 
+    /**
+     * @return The custom localized name of the linked {@link ItemStack}
+     */
     @NotNull
     public String getLocalizedName() {
         return this.meta().getLocalizedName();
     }
 
+    /**
+     * Set the custom localized name of the linked {@link ItemStack}
+     * @param s The text to set the custom localized name to
+     * @return This instance of {@link BetterItemStack}
+     */
     public BetterItemStack setLocalizedName(@Nullable String s) {
         ItemMeta meta = this.meta();
         meta.setLocalizedName(s);
@@ -67,15 +93,26 @@ public class BetterItemStack {
         return this;
     }
 
+    /**
+     * @return Whether the linked {@link ItemStack} has lore set
+     */
     public boolean hasLore() {
         return this.meta().hasLore();
     }
 
+    /**
+     * @return The lore of the linked {@link ItemStack}
+     */
     @Nullable
     public List<String> getLore() {
         return this.meta().getLore();
     }
 
+    /**
+     * Set the lore of the linked {@link ItemStack}
+     * @param list A list of lines to set as the lore of the linked {@link ItemStack}
+     * @return This instance of {@link BetterItemStack}
+     */
     public BetterItemStack setLore(@Nullable List<String> list) {
         ItemMeta meta = this.meta();
         meta.setLore(list);
@@ -84,6 +121,11 @@ public class BetterItemStack {
         return this;
     }
 
+    /**
+     * Set the lore of the linked {@link ItemStack}
+     * @param list A list of lines to set as the lore of the linked {@link ItemStack}
+     * @return This instance of {@link BetterItemStack}
+     */
     public BetterItemStack setLore(String... list) {
         ItemMeta meta = this.meta();
         meta.setLore(Arrays.asList(list));
@@ -92,14 +134,25 @@ public class BetterItemStack {
         return this;
     }
 
+    /**
+     * @return Whether the linked {@link ItemStack} has CustomModelData
+     */
     public boolean hasCustomModelData() {
         return this.meta().hasCustomModelData();
     }
 
+    /**
+     * @return The CustomModelData of the linked {@link ItemStack}
+     */
     public int getCustomModelData() {
         return this.meta().getCustomModelData();
     }
 
+    /**
+     * Set the CustomModelData of the linked {@link ItemStack}
+     * @param integer The value to set the CustomModelData to
+     * @return This instance of {@link BetterItemStack}
+     */
     public BetterItemStack setCustomModelData(@Nullable Integer integer) {
         ItemMeta meta = this.meta();
         meta.setCustomModelData(integer);
@@ -108,6 +161,9 @@ public class BetterItemStack {
         return this;
     }
 
+    /**
+     * @return Whether the linked {@link ItemStack} has any enchantments
+     */
     public boolean hasEnchants() {
         return this.meta().hasEnchants();
     }
@@ -257,11 +313,13 @@ public class BetterItemStack {
         return r;
     }
 
+    @SuppressWarnings("deprecation")
     @NotNull
     public CustomItemTagContainer getCustomTagContainer() {
         return this.meta().getCustomTagContainer();
     }
 
+    @SuppressWarnings("deprecation")
     public BetterItemStack setVersion(int i) {
         ItemMeta meta = this.meta();
         meta.setVersion(i);
@@ -299,20 +357,24 @@ public class BetterItemStack {
         return this;
     }
 
+    @SuppressWarnings("deprecation")
     public MaterialData getData() {
         return this.itemStack.getData();
     }
 
+    @SuppressWarnings("deprecation")
     public BetterItemStack setData(MaterialData data) {
         this.itemStack.setData(data);
 
         return this;
     }
 
+    @SuppressWarnings("deprecation")
     public short getDurability() {
         return this.itemStack.getDurability();
     }
 
+    @SuppressWarnings("deprecation")
     public BetterItemStack setDurability(short durability) {
         this.itemStack.setDurability(durability);
 
@@ -333,10 +395,16 @@ public class BetterItemStack {
 
     //endregion
 
+    /**
+     * @return The {@link ItemMeta} of the linked {@link ItemStack}
+     */
     public ItemMeta getItemMeta() {
         return this.meta();
     }
 
+    /**
+     * @return The {@link ItemStack} linked to this instance
+     */
     public ItemStack getItemStack() {
         return this.itemStack;
     }
