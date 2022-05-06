@@ -1,4 +1,4 @@
-package me.endergaming.enderlibs.utils;
+package me.endergaming.enderlibs.misc;
 
 import java.util.UUID;
 

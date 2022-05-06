@@ -1,7 +1,7 @@
 package me.endergaming.enderlibs.sql;
 
-import me.endergaming.enderlibs.utils.ServerUtils;
-import me.endergaming.enderlibs.utils.Task;
+import me.endergaming.enderlibs.misc.ServerUtils;
+import me.endergaming.enderlibs.misc.Task;
 
 import java.io.Closeable;
 import java.sql.*;

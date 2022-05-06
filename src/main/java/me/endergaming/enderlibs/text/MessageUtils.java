@@ -2,7 +2,7 @@ package me.endergaming.enderlibs.text;
 
 import me.endergaming.enderlibs.command.BaseCommand;
 import me.endergaming.enderlibs.file.Responses;
-import me.endergaming.enderlibs.utils.ServerUtils;
+import me.endergaming.enderlibs.misc.ServerUtils;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.Bukkit;

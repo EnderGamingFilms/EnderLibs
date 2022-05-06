@@ -1,8 +1,8 @@
-package me.endergaming.enderlibs.utils;
+package me.endergaming.enderlibs.misc;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import org.jetbrains.annotations.Nullable;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,8 +31,8 @@ public class MojangAPI {
             String json = parseInput(in);
             // Parse api return
             if (!json.equals("")) {
-                JSONParser parser = new JSONParser();
-                JSONObject result = (JSONObject) parser.parse(json);
+                Gson gson = new Gson();
+                JsonObject result = gson.fromJson(json, JsonObject.class);
                 String id = result.get("id").toString();
                 name = result.get("name").toString();
                 if (id.length() == 32) {
@@ -42,7 +42,9 @@ public class MojangAPI {
                     playerUUID = UUID.fromString(id);
                 }
 
-                if (!name.isEmpty() && playerUUID != null) profile = new PlayerProfile(name, playerUUID);
+                if (!name.isBlank() && playerUUID != null) {
+                    profile = new PlayerProfile(name, playerUUID);
+                }
             }
         } catch (Throwable e) {
             e.printStackTrace();

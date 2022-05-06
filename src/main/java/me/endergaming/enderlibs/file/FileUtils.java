@@ -1,7 +1,7 @@
 package me.endergaming.enderlibs.file;
 
+import me.endergaming.enderlibs.misc.ServerUtils;
 import me.endergaming.enderlibs.text.MessageUtils;
-import me.endergaming.enderlibs.utils.ServerUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 
-public class FileManager {
+public class FileUtils {
     /**
      * Returns the Config located at the "path" with extension "ext"
      * <br /><br />
