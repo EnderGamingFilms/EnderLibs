@@ -1,4 +1,4 @@
-package me.endergaming.enderlibs.utils;
+package me.endergaming.enderlibs.text;
 
 import org.apache.commons.lang.Validate;
 import org.bukkit.ChatColor;

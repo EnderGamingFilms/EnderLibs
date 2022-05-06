@@ -1,4 +1,4 @@
-package me.endergaming.enderlibs.utils;
+package me.endergaming.enderlibs.misc;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;

@@ -1,4 +1,4 @@
-package me.endergaming.enderlibs.utils;
+package me.endergaming.enderlibs.misc;
 
 import me.endergaming.enderlibs.text.MessageUtils;
 import org.bukkit.Bukkit;
