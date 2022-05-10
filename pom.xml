@@ -4,20 +4,22 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>co.enderdev</groupId>
-    <artifactId>EnderLibs</artifactId>
+    <groupId>org.dotwavpresents</groupId>
+    <artifactId>dwtoolkit</artifactId>
     <version>0.3.0</version>
+
     <packaging>jar</packaging>
 
-    <name>EnderLibs</name>
+    <name>DWToolkit</name>
 
-    <description>Basic library for Ender's plugins</description>
     <properties>
         <java.version>11</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <build>
+        <defaultGoal>clean install</defaultGoal>
+        <finalName>DWToolkit</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -43,6 +45,15 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.3.1</version>
+                <configuration>
+                    <forceCreation>true</forceCreation>
+                    <outputDirectory>${project.basedir}/build</outputDirectory>
+                </configuration>
             </plugin>
         </plugins>
         <resources>
@@ -75,6 +86,7 @@
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
             <version>13.0</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>
