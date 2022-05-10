@@ -1,0 +1,2 @@
+install:
+  - mvn install:install-file -Dpackaging=jar -Dfile=spigot-1.18.2.jar -DgroupId=org.spigotmc -DartifactId=spigot -Dversion=1.18.2-R0.1-SNAPSHOT
