@@ -1,2 +1,7 @@
+jdk:
+  - openjdk11
+before_install:
+  - wget https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar
+  - java -jar BuildTools.jar --rev 1.18.2
 install:
-  - mvn install:install-file -Dpackaging=jar -Dfile=spigot-1.18.2.jar -DgroupId=org.spigotmc -DartifactId=spigot -Dversion=1.18.2-R0.1-SNAPSHOT
+  - mvn install:install-file -Dpackaging=jar -Dfile=".\Spigot\Spigot-Server\target\spigot-1.18-R0.1-SNAPSHOT.jar" -DgroupId=org.spigotmc -DartifactId=spigot -Dversion=1.18.2-R0.1-SNAPSHOT
