@@ -35,9 +35,11 @@ public abstract class MainCommand extends BaseCommand {
         this.permission = String.format("%s.command.%s", plugin.getName().toLowerCase(), command);
         this.playerOnly = playerOnly;
 
-        Permission bukkitPerm = new Permission(this.permission);
-        bukkitPerm.setDefault(PermissionDefault.OP);
-        Bukkit.getPluginManager().addPermission(bukkitPerm);
+        if (Bukkit.getPluginManager().getPermission(this.permission) == null) {
+            Permission bukkitPerm = new Permission(this.permission);
+            bukkitPerm.setDefault(PermissionDefault.OP);
+            Bukkit.getPluginManager().addPermission(bukkitPerm);
+        }
     }
 
     @Override

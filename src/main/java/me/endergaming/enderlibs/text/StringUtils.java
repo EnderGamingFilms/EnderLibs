@@ -2,6 +2,8 @@ package me.endergaming.enderlibs.text;
 
 import org.apache.commons.lang.Validate;
 import org.bukkit.ChatColor;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
 import java.util.function.Function;
@@ -9,6 +11,7 @@ import java.util.regex.Pattern;
 
 public class StringUtils {
     public static final Pattern UUID_REGEX = Pattern.compile("[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}");
+    private static final Pattern STRIP_COLOR_PATTERN = Pattern.compile("(?i)(" + "[&§])" + "");
 
     public static final String LINE = "&m                                      ";
 
@@ -171,6 +174,22 @@ public class StringUtils {
         }
 
         return number + "th";
+    }
+
+    /**
+     * Strips the given message of all color codes, this is the same as ChatColor.stripColor but will remove &c and §c all the same.
+     *
+     * @param input String to strip of color
+     * @return A copy of the input string, without any coloring
+     */
+    @Contract("!null -> !null; null -> null")
+    @Nullable
+    public static String stripColor(@Nullable final String input) {
+        if (input == null) {
+            return null;
+        }
+
+        return STRIP_COLOR_PATTERN.matcher(input).replaceAll("");
     }
 
     /**

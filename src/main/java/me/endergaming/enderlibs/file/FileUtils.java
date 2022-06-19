@@ -81,12 +81,10 @@ public class FileUtils {
         if (!file.exists()) {
             try {
                 instance.saveResource(path.replace(".", File.separator).concat("." + ext), true);
-                MessageUtils.log(MessageUtils.LogLevel.WARNING, ChatColor.GREEN + fileName + " did not exist so one was created");
             } catch (Exception ignored) {
                 try {
 //                    noinspection ResultOfMethodCallIgnored
                     file.createNewFile();
-                    MessageUtils.log(MessageUtils.LogLevel.WARNING, ChatColor.YELLOW + fileName + " did not exist so one was created");
                 } catch (Exception e) {
                     MessageUtils.log(MessageUtils.LogLevel.WARNING, ChatColor.RED + "There was an issue creating " + fileName);
                     e.printStackTrace();

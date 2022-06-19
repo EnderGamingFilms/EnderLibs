@@ -18,19 +18,21 @@ import java.util.regex.Pattern;
 public class LocationUtils {
     /**
      * Gets the chunk X and Z of a location
+     *
      * @param loc The location to get the chunk coordinates of
      * @return An array containing the chunk coordinates [x, z]
      */
     public static int[] getChunkCoordinates(Location loc) {
-        return new int[] {loc.getBlockX() >> 4, loc.getBlockZ() >> 4};
+        return new int[]{loc.getBlockX() >> 4, loc.getBlockZ() >> 4};
     }
 
     /**
      * Loads a Location from a String. If the world this Location is in is not yet loaded, waits for it to load, then passes
      * the Location to the callback.
-     * @param string The String to be parsed into a Location
+     *
+     * @param string    The String to be parsed into a Location
      * @param separator The separator used when converting this Location to a String
-     * @param callback The callback to use the Location once it has been loaded
+     * @param callback  The callback to use the Location once it has been loaded
      */
     public static void fromStringLater(String string, String separator, Consumer<Location> callback) {
         String[] split = string.split(Pattern.quote(separator));
@@ -53,7 +55,8 @@ public class LocationUtils {
 
     /**
      * Converts a String back to a Location
-     * @param string The stringified Location
+     *
+     * @param string    The stringified Location
      * @param separator The separator that was used in toString
      * @return The Location
      */
@@ -72,6 +75,7 @@ public class LocationUtils {
 
     /**
      * Converts a String back to a Location. The same as calling fromString(String, " ")
+     *
      * @param string The stringified Location
      * @return The Location
      */
@@ -81,7 +85,8 @@ public class LocationUtils {
 
     /**
      * Converts a String back to a Location
-     * @param string The stringified Location
+     *
+     * @param string    The stringified Location
      * @param separator The separator that was used in toString
      * @return The Location
      */
@@ -102,6 +107,7 @@ public class LocationUtils {
 
     /**
      * Converts a String back to a Location. The same as calling fromString(String, " ")
+     *
      * @param string The stringified Location
      * @return The Location
      */
@@ -111,7 +117,8 @@ public class LocationUtils {
 
     /**
      * Converts a Location to a precise String
-     * @param loc The Location to be stringified
+     *
+     * @param loc       The Location to be stringified
      * @param separator The separator to use between pieces of information
      * @return The stringified Location
      */
@@ -125,8 +132,25 @@ public class LocationUtils {
     }
 
     /**
+     * Converts a Location to a precise String
+     *
+     * @param separator The separator to use between pieces of information
+     * @return The stringified Location
+     */
+    public static String toAccurateString(String world, double x, double y, double z, float yaw, float pitch, String separator) {
+        return new StringBuilder().append(world).append(separator)
+                .append(x).append(separator)
+                .append(y).append(separator)
+                .append(z).append(separator)
+                .append(yaw).append(separator)
+                .append(pitch).toString();
+    }
+
+
+    /**
      * Converts a Location to a String
-     * @param loc The Location to be stringified
+     *
+     * @param loc       The Location to be stringified
      * @param separator The separator to use between pieces of information
      * @return The stringified Location
      */
@@ -139,7 +163,8 @@ public class LocationUtils {
 
     /**
      * Converts a Location to a String representing its location
-     * @param block The Block location to be stringified
+     *
+     * @param block     The Block location to be stringified
      * @param separator The separator to use between pieces of information
      * @return The stringified location
      */
@@ -152,6 +177,7 @@ public class LocationUtils {
 
     /**
      * Converts a Location to a String representing its location
+     *
      * @param block The Block location to be stringified
      * @return The stringified location
      */
@@ -162,7 +188,8 @@ public class LocationUtils {
     /**
      * Loads a Location from a String. If the world this Location is in is not yet loaded, waits for it to load, then passes
      * the Location to the callback.
-     * @param string The String to be parsed into a Location
+     *
+     * @param string   The String to be parsed into a Location
      * @param callback The callback to use the Location once it has been loaded
      */
     public static void fromStringLater(String string, Consumer<Location> callback) {
@@ -171,6 +198,7 @@ public class LocationUtils {
 
     /**
      * Converts a Location to a String. The same as calling toString(Location, " ")
+     *
      * @param loc The Location to be stringified
      * @return The stringified Location
      */
@@ -197,8 +225,9 @@ public class LocationUtils {
 
     /**
      * Waits for a world with the given name to load before calling the callback
+     *
      * @param worldname The name of the world
-     * @param callback A callback to be passed the world when it loads
+     * @param callback  A callback to be passed the world when it loads
      */
     public static void waitForWorld(String worldname, Consumer<World> callback) {
         World world = Bukkit.getWorld(worldname);
@@ -223,6 +252,7 @@ public class LocationUtils {
 
     /**
      * Gets the Vector direction of a BlockFace. For use in versions below 1.13.
+     *
      * @param face The block face
      * @return The vector representing the direction
      */
