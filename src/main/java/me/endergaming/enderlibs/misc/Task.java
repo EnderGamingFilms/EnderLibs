@@ -2,7 +2,9 @@ package me.endergaming.enderlibs.misc;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
+import java.security.InvalidParameterException;
 import java.util.function.Consumer;
 
 /**
@@ -74,6 +76,8 @@ public class Task {
      * @return The Task that has been scheduled
      */
     public static Task syncDelayed(Plugin plugin, Runnable run, long delay) {
+        checkRunnable(run);
+
         return syncDelayed(plugin, t -> run.run(), delay);
     }
 
@@ -124,6 +128,8 @@ public class Task {
      * @return The Task that has been scheduled
      */
     public static Task syncRepeating(Plugin plugin, Runnable run, long delay, long period) {
+        checkRunnable(run);
+
         return syncRepeating(plugin, t -> run.run(), delay, period);
     }
 
@@ -172,6 +178,8 @@ public class Task {
      * @return The Task that has been scheduled
      */
     public static Task asyncDelayed(Plugin plugin, Runnable run) {
+        checkRunnable(run);
+
         return asyncDelayed(plugin, t -> run.run(), 0);
     }
 
@@ -216,6 +224,8 @@ public class Task {
      * @return The Task that has been scheduled
      */
     public static Task asyncDelayed(Plugin plugin, Runnable run, long delay) {
+        checkRunnable(run);
+
         return asyncDelayed(plugin, t -> run.run(), delay);
     }
 
@@ -341,6 +351,16 @@ public class Task {
         return this.plugin;
     }
 
+
+    /**
+     * Throws an exception if the runnable is of type {@link BukkitRunnable}
+     */
+    private static void checkRunnable(Runnable run) {
+        if (run instanceof BukkitRunnable) {
+            throw new InvalidParameterException("Cannot schedule a BukkitRunnable as a Task please use \"() -> {}\" or \"new Runnable() {}\"... or crazy idea just use the consumer method.");
+        }
+    }
+
     /**
      * Represents a type of task
      */
@@ -352,5 +372,4 @@ public class Task {
         ASYNC_REPEATING
 
     }
-
 }
