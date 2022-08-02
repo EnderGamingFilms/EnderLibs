@@ -92,11 +92,5 @@
             <version>13.0</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>com.gitlab.ruany</groupId>
-            <artifactId>LANBroadcaster</artifactId>
-            <version>1.6.2</version>
-            <scope>compile</scope>
-        </dependency>
     </dependencies>
 </project>
