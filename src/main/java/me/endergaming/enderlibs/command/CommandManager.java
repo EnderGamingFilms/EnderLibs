@@ -1,6 +1,7 @@
 package me.endergaming.enderlibs.command;
 
 import me.endergaming.enderlibs.text.MessageUtils;
+import org.bukkit.Bukkit;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -40,6 +41,14 @@ public class CommandManager {
      * @param mainCommand
      */
     public void register(MainCommand mainCommand) {
+        var cmd = Bukkit.getServer().getPluginCommand(mainCommand.command);
+
+        if (cmd != null) {
+            cmd.setExecutor(mainCommand);
+            cmd.setTabCompleter(mainCommand);
+            return;
+        }
+
         if (mainCommand.registered) {
             MessageUtils.log(MessageUtils.LogLevel.SEVERE, "&cTried to register &d" + mainCommand.command + "&c when it is already registered. Please fix!");
             return;
@@ -60,8 +69,7 @@ public class CommandManager {
             MessageUtils.log(MessageUtils.LogLevel.WARNING, "&eSub-command(s) still added for command &d" + mainCommand.command);
             return;
         } else {
-            this.commandList.add(mainCommand);
-            mainCommand.register();
+            this.register(mainCommand);
         }
         Arrays.stream(subCommands).forEach(mainCommand::addSubCommand);
     }

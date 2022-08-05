@@ -1,19 +1,23 @@
 package me.endergaming.enderlibs.misc;
 
-import com.mojang.authlib.GameProfile;
-import net.minecraft.network.chat.ChatComponentText;
-import net.minecraft.network.chat.IChatBaseComponent;
+import me.endergaming.enderlibs.nms.packets.IPacketSender;
+import me.endergaming.enderlibs.nms.packets.PacketSender_1_17;
+import me.endergaming.enderlibs.nms.packets.PacketSender_1_18;
+import me.endergaming.enderlibs.nms.packets.PacketSender_1_19;
 import net.minecraft.network.protocol.game.PacketPlayOutPlayerInfo;
 import net.minecraft.server.network.PlayerConnection;
-import net.minecraft.world.level.EnumGamemode;
+import net.minecraft.network.protocol.game.PacketPlayOutPlayerInfo;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 public class PlayerUtils {
+    static IPacketSender packetSender = null;
+
     public static void healPlayer(Player player) {
         player.setHealth(player.getMaxHealth());
         player.setSaturation(20);
@@ -40,25 +44,41 @@ public class PlayerUtils {
     }
 
     public static void hidePlayerNotOnTab(Player toHide) {
+        if (packetSender == null) {
+            var ver = ServerUtils.getServerVersion();
+
+            if (ver.contains("1.17")) {
+                packetSender = new PacketSender_1_17();
+            } else if (ver.contains("1.18")) {
+                packetSender = new PacketSender_1_18();
+            } else if (ver.contains("1.19")) {
+                packetSender = new PacketSender_1_19();
+            }
+        }
+
         hidePlayer(toHide);
-        GameProfile gameProfile = new GameProfile(toHide.getUniqueId(), toHide.getName());
-        IChatBaseComponent text = new ChatComponentText(gameProfile.getName());
-
         // When a player is hidden (not on tab) their tab name will be shaded as if they were in spectator mode.
-        PacketPlayOutPlayerInfo.PlayerInfoData playerInfo = new PacketPlayOutPlayerInfo.PlayerInfoData(gameProfile, 0, EnumGamemode.d, text);
+        PacketPlayOutPlayerInfo.PlayerInfoData playerInfo = null;
 
-        PacketPlayOutPlayerInfo packet = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.a);
+        try {
+            playerInfo = packetSender.getPlayerInfo(toHide);
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException | NoSuchFieldException e) {
+            e.printStackTrace();
+        }
+
+        var packet = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.a);
 
         packet.b().add(playerInfo);
 
-        for (Player player : Bukkit.getOnlinePlayers()) {
+        Bukkit.getOnlinePlayers().stream().filter(p -> !p.getUniqueId().equals(toHide.getUniqueId())).forEach(player -> {
             try {
                 PlayerConnection conn = (PlayerConnection) getConnection(player);
-                conn.a.a(packet);
+
+                packetSender.sendPacket(conn, packet);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
+        });
     }
 
     public static void showPlayer(Player player) {

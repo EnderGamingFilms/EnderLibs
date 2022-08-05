@@ -124,22 +124,20 @@ public class MessageUtils {
         INFO, WARNING, SEVERE
     }
 
+    public static void log(final LogLevel logLevel, String msg) {
+        log(logLevel, msg, "[" + ServerUtils.getCallingPlugin().getName() + "]");
+    }
+
     /**
      * This method will log a message to the console.
      *
      * @param   logLevel    The LogLevel enum determining the severity of the logged message.
      * @param   msg         The message that should be sent to the console.
      */
-    public static void log(final LogLevel logLevel, String msg) {
+    public static void log(final LogLevel logLevel, String msg, String prefix) {
         msg = colorize(msg);
 
-        Logger logger;
-
-        if (ServerUtils.getCallingPlugin() != null) {
-            logger = ServerUtils.getCallingPlugin().getLogger();
-        } else {
-            logger = Bukkit.getLogger();
-        }
+        Logger logger = Bukkit.getLogger();
 
         switch (logLevel) {
             case INFO:

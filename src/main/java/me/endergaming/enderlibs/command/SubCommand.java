@@ -106,8 +106,10 @@ public abstract class SubCommand extends BaseCommand {
     public void setPermission(String permission) {
         this.permission = permission;
 
-        Permission bukkitPerm = new Permission(this.permission);
-        bukkitPerm.setDefault(PermissionDefault.OP);
-        Bukkit.getPluginManager().addPermission(bukkitPerm);
+        if (Bukkit.getPluginManager().getPermission(this.permission) == null) {
+            Permission bukkitPerm = new Permission(this.permission);
+            bukkitPerm.setDefault(PermissionDefault.OP);
+            Bukkit.getPluginManager().addPermission(bukkitPerm);
+        }
     }
 }
