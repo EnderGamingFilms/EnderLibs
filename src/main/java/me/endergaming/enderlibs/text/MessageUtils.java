@@ -21,9 +21,9 @@ public class MessageUtils {
     /**
      * Returns the message with added prefix and color.
      *
-     * @param   message The message you want to send to the player.
-     * @param   prefix  Some prefix used for formatting
-     * @return          The finalized message.
+     * @param message The message you want to send to the player.
+     * @param prefix  Some prefix used for formatting
+     * @return The finalized message.
      */
     public static String format(String message, String prefix) {
         message = prefix + message;
@@ -34,19 +34,31 @@ public class MessageUtils {
     /**
      * Returns the message colorized via color code. For hex colors use <code>{#123456}</code> instead of just <code>&c</code>
      *
-     * @param   message The message you want to send to the player, containing a color code.
-     * @return          The resulting message implemented with color.
+     * @param message The message you want to send to the player, containing a color code.
+     * @return The resulting message implemented with color.
+     * @deprecated Just a name change.
      */
+    @Deprecated
     public static String colorize(String message) {
+        return color(message);
+    }
+
+    /**
+     * Returns the message colorized via color code. For hex colors use <code>{#123456}</code> instead of just <code>&c</code>
+     *
+     * @param text The message you want to send to the player, containing a color code.
+     * @return The resulting message implemented with color.
+     */
+    public static String color(String text) {
         try {
             if (Integer.parseInt(ServerUtils.getServerVersion().split("\\.")[1]) >= 16) {
-                message = translateHexColorCodes(message);
+                text = translateHexColorCodes(text);
             }
         } finally {
-            message = ChatColor.translateAlternateColorCodes('&', message);
+            text = ChatColor.translateAlternateColorCodes('&', text);
         }
 
-        return message;
+        return text;
     }
 
     public static String translateHexColorCodes(String message) {
@@ -131,23 +143,21 @@ public class MessageUtils {
     /**
      * This method will log a message to the console.
      *
-     * @param   logLevel    The LogLevel enum determining the severity of the logged message.
-     * @param   msg         The message that should be sent to the console.
+     * @param logLevel The LogLevel enum determining the severity of the logged message.
+     * @param msg      The message that should be sent to the console.
      */
     public static void log(final LogLevel logLevel, String msg, String prefix) {
-        msg = colorize(msg);
-
         Logger logger = Bukkit.getLogger();
 
         switch (logLevel) {
             case INFO:
-                logger.info(msg);
+                Bukkit.getConsoleSender().sendMessage("[".concat(prefix).concat("] ").concat(colorize(msg)));
                 break;
             case WARNING:
-                logger.warning(msg);
+                logger.warning(ChatColor.stripColor(msg));
                 break;
             case SEVERE:
-                logger.severe(msg);
+                logger.severe(ChatColor.stripColor(msg));
                 break;
             default:
                 throw new IllegalStateException("Undefined LogLevel: " + logLevel);
