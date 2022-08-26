@@ -85,6 +85,8 @@ public class FileUtils {
             } catch (Exception ignored) {
                 try {
 //                    noinspection ResultOfMethodCallIgnored
+                    file.mkdirs();
+//                    noinspection ResultOfMethodCallIgnored
                     file.createNewFile();
                     MessageUtils.log(MessageUtils.LogLevel.WARNING, ChatColor.YELLOW + fileName + " did not exist so one was created");
                 } catch (Exception e) {
