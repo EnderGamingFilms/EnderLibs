@@ -1,4 +1,4 @@
-name: ${project.build.finalName}
+name: ${project.name}
 version: ${project.version}
 main: me.endergaming.enderlibs.Main
 api-version: 1.17
