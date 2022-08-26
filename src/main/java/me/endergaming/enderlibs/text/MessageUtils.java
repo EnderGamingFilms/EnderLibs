@@ -149,15 +149,26 @@ public class MessageUtils {
     public static void log(final LogLevel logLevel, String msg, String prefix) {
         Logger logger = Bukkit.getLogger();
 
+        if (!prefix.matches(".*\\[.*\\].*")) {
+            prefix = "[" + prefix + "] ";
+        }
+
+        if (logLevel != LogLevel.INFO && msg.matches(".*(&([A-z0-9])).*")) {
+            log(LogLevel.INFO, msg, prefix);
+            return;
+        }
+
+        final String _msg = colorize(prefix + msg);
+
         switch (logLevel) {
             case INFO:
-                Bukkit.getConsoleSender().sendMessage("[".concat(prefix).concat("] ").concat(colorize(msg)));
+                Bukkit.getConsoleSender().sendMessage(_msg);
                 break;
             case WARNING:
-                logger.warning(ChatColor.stripColor(msg));
+                logger.warning(ChatColor.stripColor(_msg));
                 break;
             case SEVERE:
-                logger.severe(ChatColor.stripColor(msg));
+                logger.severe(ChatColor.stripColor(_msg));
                 break;
             default:
                 throw new IllegalStateException("Undefined LogLevel: " + logLevel);
